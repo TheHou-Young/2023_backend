@@ -8,7 +8,10 @@ const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
 const dotenv = require('dotenv')
 
-// 配置不同环境
+/**
+ * 配置不同环境
+ * env负责书写默认环境，其他的不同的环境如果有冲突会将env公共配置覆盖
+ */
 dotenv.config({
   path: path.resolve(
     __dirname,
@@ -35,7 +38,7 @@ app.use('/users', usersRouter)
 app.use(function (req, res, next) {
   next(createError(404))
 })
-
+console.log(process.env.MONGO)
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development

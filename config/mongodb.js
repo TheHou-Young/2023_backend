@@ -1,16 +1,14 @@
-const mongoose = require("mongoose");
-const { MONGO_URL } = require("./db");
+const mongoose = require('mongoose')
 
-mongoose.connect(MONGOURL, {
+mongoose.connect(process.env.MONGOURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+})
 
-mongoose.connection.on("connected", () => {
-  console.log("Connected to mongoDB");
-});
+mongoose.connection.on('connected', () => {
+  console.log('Connected to mongoDB')
+})
 
-mongoose.connection.on("error", () => {
-  console.log("Error");
-});
-
+mongoose.connection.on('error', () => {
+  console.log('Error')
+})
