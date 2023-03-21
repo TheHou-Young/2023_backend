@@ -5,17 +5,26 @@
   "scripts": {
     "start": "node ./bin/www",
     "prepare": "husky install",
+    "dev": "cross-env NODE_ENV=development nodemon bin/www.js",
+    "pro": "cross-env NODE_ENV=production nodemon bin/www.js",
+    "local": "cross-env NODE_ENV=local nodemon bin/www.js",
     "commit": "git-cz"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
+    "cross-env": "^7.0.3",
+    "crypto-js": "^4.1.1",
     "debug": "~2.6.9",
-    "ejs": "~2.6.1",
-    "express": "~4.16.1",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
     "http-errors": "~1.6.3",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.2",
     "morgan": "~1.9.1",
-    "nodemon": "^2.0.21"
+    "nodemon": "^2.0.21",
+    "redis": "^4.6.5",
+    "xss": "^1.0.14"
   },
   "devDependencies": {
     "commitizen": "^4.3.0",
