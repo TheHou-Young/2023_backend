@@ -1,9 +1,31 @@
-var express = require('express')
-var router = express.Router()
+const fs = require('fs')
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' })
-})
+// 后续创建route也无需在index目录中手动添加
+const autoLoadRoute = () => {
+  const fileList = fs.readdirSync('routes')
+  return fileList
+    .filter((fileName) => fileName !== 'index.js')
+    .map((fileName) => fileName.split('.').shift())
+    .reduce((res, item) => {
+      return {
+        ...res,
+        [item]: require(`./${item}`),
+      }
+    }, {})
+}
 
-module.exports = router
+const routeStores = autoLoadRoute()
+
+const loadRouter = (
+  expressInstance,
+  routes = routeStores,
+  publicPath = '/api'
+) =>
+  Object.values(routes).forEach((router) =>
+    expressInstance?.use(publicPath, router)
+  )
+
+module.exports = {
+  loadRouter,
+  routeStores,
+}
