@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const permissionSchma = new mongoose.Schema({
   permission_name: {
@@ -9,7 +9,7 @@ const permissionSchma = new mongoose.Schema({
     type: String,
     required: true,
   },
-});
+})
 
-const permission = mongoose.model("permission", permissionSchma);
-module.exports = permission;
+const permission = mongoose.model('permission', permissionSchma)
+module.exports = permission
