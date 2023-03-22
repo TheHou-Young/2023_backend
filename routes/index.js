@@ -1,17 +1,22 @@
 const fs = require('fs')
 
 // 后续创建route也无需在index目录中手动添加
-const autoLoadRoute = () => {
+const autoLoadRoute = (blacklist = ['index.js'], whitelist = []) => {
   const fileList = fs.readdirSync('routes')
   return fileList
-    .filter((fileName) => fileName !== 'index.js')
+    .filter(
+      (fileName) =>
+        blacklist.includes(fileName) ||
+        (!!whitelist.length && !whitelist.includes(fileName))
+    )
     .map((fileName) => fileName.split('.').shift())
-    .reduce((res, item) => {
-      return {
+    .reduce(
+      (res, item) => ({
         ...res,
         [item]: require(`./${item}`),
-      }
-    }, {})
+      }),
+      {}
+    )
 }
 
 const routeStores = autoLoadRoute()
