@@ -6,8 +6,7 @@ const autoLoadRoute = (blacklist = ['index.js'], whitelist = []) => {
   return fileList
     .filter(
       (fileName) =>
-        blacklist.includes(fileName) ||
-        (!!whitelist.length && !whitelist.includes(fileName))
+        !blacklist.includes(fileName) || whitelist.includes(fileName)
     )
     .map((fileName) => fileName.split('.').shift())
     .reduce(
