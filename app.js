@@ -8,6 +8,8 @@ const { loadRouter } = require('./routes/index')
 
 const dotenv = require('dotenv')
 
+const app = express()
+
 /**
  * 配置不同环境
  * env负责书写默认环境，其他的不同的环境如果有冲突会将env公共配置覆盖
@@ -19,11 +21,32 @@ dotenv.config({
   ),
 })
 
-const app = express()
-
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'))
 // app.set('view engine', 'ejs')
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
+
+// app.use(logger('dev'));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+// app.use(cookieParser());
+// app.use(express.static(path.join(__dirname, 'public')));
+
+mongodb连接
+const { MONGO_URL } = require("./config/db");
+mongoose.connect(MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+mongoose.connection.on("connected", () => {
+  console.log("Connected to mongoDB");
+});
+
+mongoose.connection.on("error", () => {
+  console.log("Error");
+});
 
 app.use(logger('dev'))
 app.use(express.json())
