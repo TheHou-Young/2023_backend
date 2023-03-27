@@ -1,7 +1,8 @@
-const httpConfig = (expressInstance) => {
+const lodash = require('lodash')
+
+const httpHeaderConfig = (expressInstance) => {
   // 为所有响应添加跨域设置
   expressInstance?.use('*', (_, res, next) => {
-    // TODO（钟卓江）: 我认为为了安全性考虑应该限制允许跨域的来源
     res.header('Access-Control-Allow-Origin', '*')
     res.header(
       'Access-Control-Allow-Headers',
@@ -15,6 +16,20 @@ const httpConfig = (expressInstance) => {
   // 前端的预检请求（preflight request），为了获知服务端是否允许该请求
   expressInstance?.options('*', (_, res) => {
     res.sendStatus(200)
+  })
+}
+
+// token相关配置
+const httpTokenConfig = (expressInstance) => {
+  // 检查用户的 token 是否合法
+  expressInstance.use('*', (req, _, next) => {
+    // 获取 token
+    const token = req.cookies['auth-token']
+    // 如果没有 token ，用户未登录， next()
+    if (lodash.isNil(token)) {
+    } else {
+    }
+    next()
   })
 }
 
@@ -36,4 +51,4 @@ const httpErrorConfig = (expressInstance) => {
   })
 }
 
-module.exports = { httpConfig, httpErrorConfig }
+module.exports = { httpHeaderConfig, httpErrorConfig }
