@@ -1,6 +1,6 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
-const userSchma = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     //用户名字
     user_name: {
@@ -14,7 +14,7 @@ const userSchma = new mongoose.Schema(
     },
     email: {
       type: String,
-      default: " ",
+      default: '',
     },
     //用户所属的角色
     role: {
@@ -41,11 +41,11 @@ const userSchma = new mongoose.Schema(
   },
   {
     timestamps: {
-      createdAt: "created",
-      updatedAt: "updated",
+      createdAt: 'created',
+      updatedAt: 'updated',
     },
   }
 )
 
-const user = mongoose.model("user", userSchma)
+const user = mongoose.model('user', userSchema)
 module.exports = user

@@ -1,8 +1,8 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
-const roleSchma = new mongoose.Schema(
+const roleSchema = new mongoose.Schema(
   {
-    role_id:{
+    role_id: {
       type: Number,
       required: true,
     },
@@ -31,11 +31,11 @@ const roleSchma = new mongoose.Schema(
   },
   {
     timestamps: {
-      createdAt: "created",
-      updatedAt: "updated",
+      createdAt: 'created',
+      updatedAt: 'updated',
     },
   }
 )
 
-const role = mongoose.model("role", roleSchma)
+const role = mongoose.model('role', roleSchema)
 module.exports = role

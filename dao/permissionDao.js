@@ -1,12 +1,17 @@
-const permissionModel = require("../models/permission")
+const permissionModel = require('../models/permission')
 
-//添加许可
-function createPermission(){
-    
+class PermissionDao {
+  //添加许可
+  createPermission() {}
+
+  //删除许可
+  deletePermission() {}
+
+  //查询许可
+
+  //修改许可
 }
 
-//删除许可
+const permissionDao = new PermissionDao()
 
-//查询许可
-
-//修改许可
+module.exports = permissionDao

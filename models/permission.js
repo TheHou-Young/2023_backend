@@ -1,10 +1,10 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
-const permissionSchma = new mongoose.Schema(
+const permissionSchema = new mongoose.Schema(
   {
-    permission_id:{
-      type:Number,
-      required:true,
+    permission_id: {
+      type: Number,
+      required: true,
     },
     //权限名字
     permission_name: {
@@ -17,7 +17,7 @@ const permissionSchma = new mongoose.Schema(
       required: true,
     },
     //权限的父id
-    permission_pid:{
+    permission_pid: {
       type: Number,
       required: true,
     },
@@ -35,11 +35,11 @@ const permissionSchma = new mongoose.Schema(
   },
   {
     timestamps: {
-      createdAt: "created",
-      updatedAt: "updated",
+      createdAt: 'created',
+      updatedAt: 'updated',
     },
   }
 )
 
-const permission = mongoose.model("permission", permissionSchma)
+const permission = mongoose.model('permission', permissionSchema)
 module.exports = permission
