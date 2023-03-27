@@ -1,6 +1,7 @@
 const fs = require('fs')
 
 // 后续创建route也无需在index目录中手动添加
+// 流程：扫描 -> 过滤 -> 取文件 -> 加载
 const autoLoadRoute = (blacklist = ['index.js'], whitelist = []) => {
   const fileList = fs.readdirSync('routes')
   return fileList
