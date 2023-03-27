@@ -1,6 +1,6 @@
 const _ = require('mongoose')
 
-const connectMongoose = (mongoose = _) => {
+const connectMongoDB = (mongoose = _) => {
   mongoose.connect(process.env.MONGO_CONFIG, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -15,4 +15,4 @@ const connectMongoose = (mongoose = _) => {
   })
 }
 
-module.exports = { connectMongoose }
+module.exports = { connectMongoDB }

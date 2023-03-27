@@ -4,28 +4,15 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const { loadRouter } = require('./routes/index')
-const { connectMongoose } = require('./config/db/mongodb')
-const { connectRedis } = require('./config/db/redis')
-const dotenv = require('dotenv')
+const { loadEnv } = require('./config/env')
+const connectDB = require('./config/db')
 
 const app = express()
 
-/**
- * 配置不同环境
- * env负责书写默认环境，其他的不同的环境如果有冲突会将env公共配置覆盖
- */
-dotenv.config()
-dotenv.config({
-  path: path.resolve(
-    __dirname,
-    `./config/environments/.env.${process.env.NODE_ENV}`
-  ),
-})
-
-// mongodb连接
-connectMongoose()
-// redis连接
-connectRedis()
+// 加载env环境
+loadEnv()
+// 连接数据库
+connectDB()
 
 app.use(logger('dev'))
 app.use(express.json())
