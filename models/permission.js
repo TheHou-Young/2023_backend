@@ -4,7 +4,7 @@ const permissionSchema = new mongoose.Schema(
   {
     permission_id: {
       type: Number,
-      required: true,
+      default: new Date(),
     },
     //权限名字
     permission_name: {

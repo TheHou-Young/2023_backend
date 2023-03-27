@@ -4,7 +4,7 @@ const roleSchema = new mongoose.Schema(
   {
     role_id: {
       type: Number,
-      required: true,
+      default: new Date(),
     },
     //角色名字
     role_name: {
@@ -13,7 +13,7 @@ const roleSchema = new mongoose.Schema(
       unique: true,
     },
     //角色所拥有的权限
-    permissions: {
+    permission_ids: {
       type: [Number],
       required: true,
     },

@@ -17,12 +17,12 @@ const userSchema = new mongoose.Schema(
       default: '',
     },
     //用户所属的角色
-    role: {
+    role_id: {
       type: Number,
       required: true,
     },
     //用户激活状态（默认为false）
-    ativition_status: {
+    activation_status: {
       type: Boolean,
       default: false,
     },
