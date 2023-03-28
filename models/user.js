@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
     },
     //用户所属的角色
     role_id: {
-      type: Number,
+      type: String,
       required: true,
     },
     //用户激活状态（默认为false）
