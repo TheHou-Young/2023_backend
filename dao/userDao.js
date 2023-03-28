@@ -1,4 +1,5 @@
 const userModel = require('../models/user')
+const pagination = require('../utils/pagination')
 
 class UserDao {
   // 根据手机号(账户)查询个人信息
@@ -52,15 +53,21 @@ class UserDao {
     return await userModel.findById(user_id)
   }
 
-  // 查询用户列表
-  async findUserList({ account, department, activation_status }) {
+  // 查询用户列表(分页)
+  async findUserList({ account, department, activation_status }) {}
 
+  async findUserRoleInfo(user_id) {}
+
+  async userlist({ account, department, activation_status, size, page }) {
+    return await pagination(
+      userModel.find({
+        account,
+        department,
+        activation_status,
+      }),
+      { size, page }
+    )
   }
-
-  async findUserRoleInfo(user_id){
-    
-  }
-
 }
 
 const userDao = new UserDao()
