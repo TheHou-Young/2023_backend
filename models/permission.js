@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 
 const permissionSchema = new mongoose.Schema(
   {
-    permission_id: {
-      type: Number,
-      default: new Date(),
-    },
     //权限名字
     permission_name: {
       type: String,

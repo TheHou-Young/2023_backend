@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 
 const roleSchema = new mongoose.Schema(
   {
-    role_id: {
-      type: String,
-      required: true,
-    },
     //角色名字
     role_name: {
       type: String,
