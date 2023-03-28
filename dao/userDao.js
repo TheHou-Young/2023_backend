@@ -53,12 +53,10 @@ class UserDao {
     return await userModel.findById(user_id)
   }
 
-  // 查询用户列表(分页)
-  async findUserList({ account, department, activation_status }) {}
-
   async findUserRoleInfo(user_id) {}
 
-  async userlist({ account, department, activation_status, size, page }) {
+  // 查询用户列表(分页)
+  async findUserList({ account, department, activation_status, size, page }) {
     return await pagination(
       userModel.find({
         account,

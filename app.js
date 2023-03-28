@@ -5,6 +5,7 @@ const { loadEnv } = require('./config/env')
 const connectDB = require('./config/db')
 const { httpHeaderConfig, httpErrorConfig } = require('./config/http')
 const loggerConfig = require('./config/logger')
+require('express-async-errors') // 全局异常处理的引入
 
 const app = express()
 
