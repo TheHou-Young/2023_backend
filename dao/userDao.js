@@ -47,13 +47,20 @@ class UserDao {
     )
   }
 
-  // 查找个人信息
+  // 根据用户id查找个人信息
   async findUserById(user_id) {
     return await userModel.findById(user_id)
   }
 
   // 查询用户列表
-  async userlist({ account, department, activation_status }) {}
+  async findUserList({ account, department, activation_status }) {
+
+  }
+
+  async findUserRoleInfo(user_id){
+    
+  }
+
 }
 
 const userDao = new UserDao()

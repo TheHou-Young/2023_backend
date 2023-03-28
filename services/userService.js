@@ -1,4 +1,5 @@
-const userDao = require('../dao/userDao')
+const userDao = require("../dao/userDao")
+const roleDao = require("../dao/roleDao")
 
 class UserService {
   /**
@@ -7,12 +8,16 @@ class UserService {
    * @returns {Promise<*>}
    */
   async createUser(userInfo) {
-    let is_exit = await userDao.findUserByAccount(userInfo.account)
-    if (!is_exit) {
-      return
+    try {
+      let is_exit = await userDao.findUserByAccount(userInfo.account)
+      if (!is_exit) {
+        return
+      }
+      const result = await userDao.createUser(userInfo)
+      return result
+    } catch (error) {
+      throw new Error(e.message)
     }
-    const result = await userDao.createUser(userInfo)
-    return result
   }
 
   /**
@@ -21,9 +26,13 @@ class UserService {
    * @returns
    */
   async setActivationStatus(account) {
-    const result = await userDao.findUserByAccount(account)
-    let status = result.activation_status === 1 ? 0 : 1
-    return await userDao.updateActivationStatus(account, status)
+    try {
+      const result = await userDao.findUserByAccount(account)
+      let status = result.activation_status === 1 ? 0 : 1
+      return await userDao.updateActivationStatus(account, status)
+    } catch (error) {
+      throw new Error(e.message)
+    }
   }
 
   /**
@@ -32,41 +41,66 @@ class UserService {
    * @returns
    */
   async deleteUser(account) {
-    const result = await userDao.findUserByAccount(account)
-    if (result) return
-    if (result.delete_status) {
-      return
-    } else {
-      return await userDao.updateDeleteStatus(account)
+    try {
+      const result = await userDao.findUserByAccount(account)
+      if (result) return
+      if (result.delete_status) {
+        return
+      } else {
+        return await userDao.updateDeleteStatus(account)
+      }
+    } catch (error) {
+      throw new Error(e.message)
     }
   }
 
   /**
    * 修改用户信息（包括用户所属的角色）
-   * @param user_email
+   * @param account
    * @param user_name
    * @param password
-   * @param new_email
+   * @param new_account
    * @param role_id
    * @returns
    */
-  async updateUser({ user_email, user_name, password, new_email, role_id }) {
-    return await userDao.updateUser({
-      user_email,
-      user_name,
-      password,
-      new_email,
-      role_id,
-    })
+  async updateUser({ account, user_name, password, new_account, role_id }) {
+    try {
+      return await userDao.updateUser({
+        account,
+        user_name,
+        password,
+        new_account,
+        role_id,
+      })
+    } catch (error) {
+      throw new Error(e.message)
+    }
   }
 
+  /**
+   * 查找用户的信息
+   * @param user_id
+   * @returns
+   */
   async findUserById(user_id) {
-    return await userDao.findUserById(user_id)
+    try {
+      return await userDao.findUserById(user_id)
+    } catch (error) {
+      throw new Error(e.message)
+    }
   }
 
-  async findUsers() {}
+  async findUserList() {
 
-  async findUserRole() {}
+  }
+
+  async findUserRoleInfo(account) {
+    try {
+      
+    } catch (error) {
+      throw new Error(e.message)
+    }
+  }
 }
 
 const userService = new UserService()

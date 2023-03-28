@@ -10,9 +10,10 @@ const roleSchema = new mongoose.Schema(
     },
     //角色所拥有的权限
     permission_ids: {
-      type: [Number],
+      type: [String],
       required: true,
     },
+    //数据是否删除
     delete_status: {
       type: Number,
       enum: [0, 1],

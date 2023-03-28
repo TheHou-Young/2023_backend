@@ -14,9 +14,10 @@ const permissionSchema = new mongoose.Schema(
     },
     //权限的父id
     permission_pid: {
-      type: Number,
+      type: String,
       required: true,
     },
+    //数据是否删除
     delete_status: {
       type: Number,
       enum: [0, 1],
