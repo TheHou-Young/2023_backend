@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema(
     },
     //用户所属的角色
     role_id: {
-      type: String,
+      type: ObjectId,
+      ref: 'role',
       required: true,
     },
     //用户所属部门
