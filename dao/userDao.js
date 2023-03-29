@@ -1,13 +1,13 @@
 const userModel = require('../models/user')
-const roleModel = require("../models/role")
-const user = require('../models/user')
+const pagination = require('../utils/pagination')
 
 class UserDao {
-
-  async findUserByEmail(user_email){
-    return await userModel.findOne({email: user_email})
+  // 根据手机号(账户)查询个人信息
+  async findUserByAccount(account) {
+    return await userModel.findOne({ account })
   }
 
+  // 创建账户
   async createUser(userInfo) {
     return await userModel.create({
       ...userInfo,
@@ -15,35 +15,60 @@ class UserDao {
     })
   }
 
-  async updateActivationStatus(user_email, status){
-    return await userModel.updateOne({email: user_email},{
-      activation_status: status
-    })
+  // 激活账户
+  async updateActivationStatus(account, status) {
+    return await userModel.updateOne(
+      { account },
+      {
+        activation_status: status,
+      }
+    )
   }
 
-  async updateDeleteStatus(user_email){
-    return userModel.updateOne({email: user_email},{
-      delete_status: 1
-    })
+  // 软删账户
+  async updateDeleteStatus(account) {
+    return userModel.updateOne(
+      { account },
+      {
+        delete_status: 1,
+      }
+    )
   }
 
-  async updateUser(user_email, user_name, password, new_email, role_id){
-    return await userModel.updateOne({email: user_email},{
-      user_name: user_name,
-      password: password,
-      email: new_email,
-      role_id: role_id
-    })
+  // 更新账户信息
+  async updateUser({ account, user_name, password, new_account, role_id }) {
+    return await userModel.updateOne(
+      { account },
+      {
+        user_name,
+        password,
+        role_id,
+        account: new_account,
+      }
+    )
   }
 
-  async findUserById(user_id){
+  // 根据用户id查找个人信息
+  async findUserById(user_id) {
     return await userModel.findById(user_id)
   }
 
-  // 添加角色
-  // 删除角色
-  // 修改角色
-  // 获取角色列表
+  //联表查询用户对应角色信息
+  async findUserRoleInfo(account) {
+    return await userModel.findOne({ account }).populate("role_id")
+  }
+
+  // 查询用户列表(分页)
+  async findUserList({ account, department, activation_status, size, page }) {
+    return await pagination(
+      userModel.find({
+        account,
+        department,
+        activation_status,
+      }),
+      { size, page }
+    )
+  }
 }
 
 const userDao = new UserDao()

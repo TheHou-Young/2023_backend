@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
 const userSchema = new mongoose.Schema(
   {
@@ -12,13 +12,20 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    email: {
+    //用户手机号
+    account: {
       type: String,
-      default: '',
+      default: "",
     },
     //用户所属的角色
     role_id: {
-      type: Number,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'role',
+      required: true,
+    },
+    //用户所属部门
+    department_id: {
+      type: String,
       required: true,
     },
     //用户激活状态（默认为false）
@@ -41,11 +48,11 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: {
-      createdAt: 'created',
-      updatedAt: 'updated',
+      createdAt: "created",
+      updatedAt: "updated",
     },
   }
 )
 
-const user = mongoose.model('user', userSchema)
+const user = mongoose.model("user", userSchema)
 module.exports = user

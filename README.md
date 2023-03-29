@@ -35,6 +35,7 @@ yarn commit
 1. 推荐使用 vscode，这里配置了 vscode 相关的 eol，不然很容易产生 CRLF 文件
 2. 如果后续有测试环境和线上环境，请在`/config/environment`里的 env 文件里面编写，如果有公共配置项目，就直接写在根目录下的.env 文件中
 3. 关于 routes 文件夹下的路由，在 index.js 已经做了文件夹的文件扫描然后再导入，所以不需要自行编写 app.use 逻辑
+4. 本项目不需要每个地方都写 try catch 逻辑，在 app.js 中已经配置好了 express-async-errors 来进行全局异常处理
 
 # 启动代码
 

@@ -1,4 +1,5 @@
 const fs = require('fs')
+require('express-async-errors') // 全局router异常处理的引入
 
 // 后续创建route也无需在index目录中手动添加
 // 流程：扫描 -> 过滤 -> 取文件 -> 加载

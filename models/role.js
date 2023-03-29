@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 
 const roleSchema = new mongoose.Schema(
   {
-    role_id: {
-      type: Number,
-      default: new Date(),
-    },
     //角色名字
     role_name: {
       type: String,
@@ -13,10 +9,11 @@ const roleSchema = new mongoose.Schema(
       unique: true,
     },
     //角色所拥有的权限
-    permission_ids: {
-      type: [Number],
-      required: true,
-    },
+    permission_ids: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'permission',
+    }],
+    //数据是否删除
     delete_status: {
       type: Number,
       enum: [0, 1],
