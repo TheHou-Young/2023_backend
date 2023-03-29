@@ -12,10 +12,15 @@ class PermissionDao {
       delete_status: 1,
     })
   }
-  
+
   //查询许可
   async findPermissionById(permission_id) {
     return await permissionModel.findById(permission_id)
+  }
+
+  //查询多个许可
+  async findPermissionsById(permission_ids) {
+    return await permissionModel.find({ _id: { $in: permission_ids } })
   }
 
   async findPermissionByname(permission_name) {

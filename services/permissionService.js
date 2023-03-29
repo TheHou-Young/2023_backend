@@ -43,12 +43,12 @@ class PermissionService {
    */
   async findPermissions(permission_ids){
     try{
-      const permissions = []
-      permission_ids.map(async (permission_id)=>{
-        const permission = await permissionDao.findPermissionById(permission_id)
-        permissions.push(permission)
-      })
-      return permissions
+      //const permissions = []
+      // permission_ids.map(async (permission_id)=>{
+      //   const permission = await permissionDao.findPermissionById(permission_id)
+      //   permissions.push(permission)
+      // })
+      return await permissionDao.findPermissionsById(permission_ids)
     }catch (error){
       throw new Error(e.message)
     }

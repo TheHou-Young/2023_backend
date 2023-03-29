@@ -90,13 +90,18 @@ class UserService {
     }
   }
 
-  async findUserList() {
-
+  async findUserList({ account, department, activation_status, size, page }) {
+    return await userDao.findUserList({
+      account,
+      department,
+      activation_status,
+      size,
+      page,
+    })
   }
 
   async findUserRoleInfo(account) {
     try {
-      
     } catch (error) {
       throw new Error(e.message)
     }
