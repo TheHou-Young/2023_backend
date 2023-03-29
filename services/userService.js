@@ -92,7 +92,18 @@ class UserService {
     })
   }
 
-  async findUserRoleInfo(account) {}
+  /**
+   * 查询用户对应角色信息
+   * @param account 
+   * @returns 
+   */
+  async findUserRoleInfo(account) {
+    try {
+      return await userDao.findUserRoleInfo(account)
+    } catch (error) {
+      throw new Error(e.message)
+    }
+  }
 }
 
 const userService = new UserService()

@@ -53,7 +53,10 @@ class UserDao {
     return await userModel.findById(user_id)
   }
 
-  async findUserRoleInfo(user_id) {}
+  //联表查询用户对应角色信息
+  async findUserRoleInfo(account) {
+    return await userModel.findOne({ account }).populate("role_id")
+  }
 
   // 查询用户列表(分页)
   async findUserList({ account, department, activation_status, size, page }) {

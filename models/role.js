@@ -10,7 +10,7 @@ const roleSchema = new mongoose.Schema(
     },
     //角色所拥有的权限
     permission_ids: [{
-      type: ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'permission',
     }],
     //数据是否删除

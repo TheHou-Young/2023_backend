@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
     },
     //用户所属的角色
     role_id: {
-      type: ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'role',
       required: true,
     },
