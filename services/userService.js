@@ -1,5 +1,5 @@
-const userDao = require("../dao/userDao")
-const roleDao = require("../dao/roleDao")
+const userDao = require('../dao/userDao')
+const roleDao = require('../dao/roleDao')
 
 class UserService {
   /**
@@ -64,17 +64,13 @@ class UserService {
    * @returns
    */
   async updateUser({ account, user_name, password, new_account, role_id }) {
-    try {
-      return await userDao.updateUser({
-        account,
-        user_name,
-        password,
-        new_account,
-        role_id,
-      })
-    } catch (error) {
-      throw new Error(e.message)
-    }
+    return await userDao.updateUser({
+      account,
+      user_name,
+      password,
+      new_account,
+      role_id,
+    })
   }
 
   /**
@@ -83,11 +79,7 @@ class UserService {
    * @returns
    */
   async findUserById(user_id) {
-    try {
-      return await userDao.findUserById(user_id)
-    } catch (error) {
-      throw new Error(e.message)
-    }
+    return await userDao.findUserById(user_id)
   }
 
   async findUserList({ account, department, activation_status, size, page }) {
@@ -100,12 +92,7 @@ class UserService {
     })
   }
 
-  async findUserRoleInfo(account) {
-    try {
-    } catch (error) {
-      throw new Error(e.message)
-    }
-  }
+  async findUserRoleInfo(account) {}
 }
 
 const userService = new UserService()
