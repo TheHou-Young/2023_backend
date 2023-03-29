@@ -27,7 +27,7 @@ class UserDao {
 
   // 软删账户
   async updateDeleteStatus(account) {
-    return userModel.updateOne(
+    return await userModel.updateOne(
       { account },
       {
         delete_status: 1,

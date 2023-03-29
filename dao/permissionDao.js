@@ -27,7 +27,7 @@ class PermissionDao {
     return await permissionModel.findOne({ permission_name })
   }
 
-  //修改许可
+  //获取许可列表
 }
 
 const permissionDao = new PermissionDao()
