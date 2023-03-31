@@ -1,4 +1,4 @@
-const roleDao = require("../dao/roleDao")
+const roleDao = require("../dao/role")
 
 class RoleService {
   /**

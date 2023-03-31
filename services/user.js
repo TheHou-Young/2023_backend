@@ -1,5 +1,5 @@
-const userDao = require('../dao/userDao')
-const roleDao = require('../dao/roleDao')
+const userDao = require('../dao/user')
+const roleDao = require('../dao/role')
 
 class UserService {
   /**

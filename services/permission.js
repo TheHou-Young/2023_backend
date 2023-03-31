@@ -1,4 +1,4 @@
-const permissionDao = require('../dao/permissionDao')
+const permissionDao = require('../dao/permission')
 
 class PermissionService {
   /**
