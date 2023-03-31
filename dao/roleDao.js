@@ -1,24 +1,31 @@
-const roleModel = require("../models/role")
+const roleModel = require('../models/role')
+const pagination = require('../utils/pagination')
 
 class RoleDao {
   // 添加角色
-  async createRole(roleInfo) {
-    return await roleModel.create({ ...roleInfo })
+  async createRole(roleInfo, session) {
+    return await roleModel.create({ ...roleInfo }, { session })
   }
 
   // 删除角色
-  async deleteRole(role_id) {
-    return await roleModel.updateOne({ role_id }, { delete_status: 1 })
+  // TODO: 后续不考虑角色删除
+  async deleteRole(role_id, session) {
+    return await roleModel.updateOne(
+      { role_id },
+      { delete_status: 1 },
+      { session }
+    )
   }
 
   // 修改角色
-  async updateRole({ role_id, role_name, permission_ids }) {
+  async updateRole({ role_id, role_name, permission_ids }, session) {
     return await roleModel.updateOne(
       { role_id },
       {
         role_name,
         permission_ids,
-      }
+      },
+      { session }
     )
   }
 
@@ -33,10 +40,16 @@ class RoleDao {
 
   //查询角色所有权限信息
   async findRolePermissionInfo(role_id) {
-    return await roleModel.findOne({ role_id }).populate("permission_ids")
+    return await roleModel.findOne({ role_id }).populate('permission_ids')
   }
 
   // 获取角色列表
+  async getRoleList({ role_name, permission_ids, size, page }) {
+    return await pagination(roleModel.find({ role_name, permission_ids }), {
+      size,
+      page,
+    })
+  }
 }
 
 const roleDao = new RoleDao()
