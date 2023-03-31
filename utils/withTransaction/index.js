@@ -5,7 +5,7 @@ const withTransaction = async (fn) => {
   try {
     await fn(session)
     await session.commitTransaction()
-  } catch (error) {
+  } catch (_) {
     await session.abortTransaction()
   } finally {
     await session.endSession()

@@ -45,7 +45,27 @@ class RoleDao {
 
   // 获取角色列表
   async getRoleList({ role_name, permission_ids, size, page }) {
-    return await pagination(roleModel.find({ role_name, permission_ids }), {
+    const findRolesWithPermission = roleModel.aggregate([
+      {
+        $lookup: {
+          from: 'permission',
+          localField: 'permissions',
+          foreignField: '_id',
+          as: 'permissions',
+        },
+      },
+      {
+        $match: {
+          'permissions._id': {
+            $all: permission_ids,
+          },
+          role_name: {
+            $regex: role_name,
+          },
+        },
+      },
+    ])
+    return await pagination(findRolesWithPermission, {
       size,
       page,
     })
