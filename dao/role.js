@@ -57,10 +57,10 @@ class RoleDao {
       {
         $match: {
           'permissions._id': {
-            $all: permission_ids,
+            $all: permission_ids ?? [],
           },
           role_name: {
-            $regex: role_name,
+            $regex: role_name ?? '',
           },
         },
       },

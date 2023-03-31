@@ -1,4 +1,4 @@
-const roleDao = require("../dao/role")
+const roleDao = require('../dao/role')
 
 class RoleService {
   /**
@@ -54,6 +54,9 @@ class RoleService {
   async findRolePermissionInfo(role_id) {
     return await roleDao.findRolePermissionInfo(role_id)
   }
+
+  getRoleList = async ({ role_name, permission_ids, size, page }) =>
+    await roleDao.getRoleList({ role_name, permission_ids, size, page })
 }
 
 const roleService = new RoleService()
