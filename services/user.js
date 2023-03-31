@@ -8,16 +8,12 @@ class UserService {
    * @returns {Promise<*>}
    */
   async createUser(userInfo) {
-    try {
-      let is_exit = await userDao.findUserByAccount(userInfo.account)
-      if (!is_exit) {
-        return
-      }
-      const result = await userDao.createUser(userInfo)
-      return result
-    } catch (error) {
-      throw new Error(e.message)
+    let is_exit = await userDao.findUserByAccount(userInfo.account)
+    if (!is_exit) {
+      return
     }
+    const result = await userDao.createUser(userInfo)
+    return result
   }
 
   /**
@@ -26,13 +22,9 @@ class UserService {
    * @returns
    */
   async setActivationStatus(account) {
-    try {
-      const result = await userDao.findUserByAccount(account)
-      let status = result.activation_status === 1 ? 0 : 1
-      return await userDao.updateActivationStatus(account, status)
-    } catch (error) {
-      throw new Error(e.message)
-    }
+    const result = await userDao.findUserByAccount(account)
+    let status = result.activation_status === 1 ? 0 : 1
+    return await userDao.updateActivationStatus(account, status)
   }
 
   /**
@@ -41,16 +33,12 @@ class UserService {
    * @returns
    */
   async deleteUser(account) {
-    try {
-      const result = await userDao.findUserByAccount(account)
-      if (result) return
-      if (result.delete_status) {
-        return
-      } else {
-        return await userDao.updateDeleteStatus(account)
-      }
-    } catch (error) {
-      throw new Error(e.message)
+    const result = await userDao.findUserByAccount(account)
+    if (result) return
+    if (result.delete_status) {
+      return
+    } else {
+      return await userDao.updateDeleteStatus(account)
     }
   }
 
@@ -94,15 +82,11 @@ class UserService {
 
   /**
    * 查询用户对应角色信息
-   * @param account 
-   * @returns 
+   * @param account
+   * @returns
    */
   async findUserRoleInfo(account) {
-    try {
-      return await userDao.findUserRoleInfo(account)
-    } catch (error) {
-      throw new Error(e.message)
-    }
+    return await userDao.findUserRoleInfo(account)
   }
 }
 
