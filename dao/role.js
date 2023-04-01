@@ -48,6 +48,16 @@ class RoleDao {
   async getRoleList({ role_name, permission_ids, size, page }) {
     const findRolesWithPermission = roleModel.aggregate([
       {
+        $match: {
+          permission_ids: {
+            $exists: permission_ids ?? [],
+          },
+          role_name: {
+            $regex: role_name ?? '',
+          },
+        },
+      },
+      {
         $unwind: '$permission_ids',
       },
       {
@@ -56,13 +66,6 @@ class RoleDao {
           localField: 'permission_ids',
           foreignField: '_id',
           as: 'permissions',
-        },
-      },
-      {
-        $match: {
-          role_name: {
-            $regex: role_name ?? '',
-          },
         },
       },
     ])
