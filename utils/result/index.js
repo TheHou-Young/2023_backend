@@ -2,7 +2,7 @@ class Result {
   constructor({ code, msg, data }) {
     this.code = code
     this.msg = msg
-    this.data = data || {}
+    this.data = data ?? {}
   }
 }
 

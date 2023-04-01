@@ -1,4 +1,4 @@
-const permissionModel = require("../models/permission")
+const permissionModel = require('../models/permission')
 
 class PermissionDao {
   //添加许可
@@ -26,8 +26,6 @@ class PermissionDao {
   async findPermissionByname(permission_name) {
     return await permissionModel.findOne({ permission_name })
   }
-
-  //获取许可列表
 }
 
 const permissionDao = new PermissionDao()

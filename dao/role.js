@@ -1,5 +1,6 @@
 const roleModel = require('../models/role')
 const pagination = require('../utils/pagination')
+const mongoose = require('mongoose')
 
 class RoleDao {
   // 添加角色
@@ -47,18 +48,18 @@ class RoleDao {
   async getRoleList({ role_name, permission_ids, size, page }) {
     const findRolesWithPermission = roleModel.aggregate([
       {
+        $unwind: '$permission_ids',
+      },
+      {
         $lookup: {
           from: 'permission',
-          localField: 'permissions',
+          localField: 'permission_ids',
           foreignField: '_id',
           as: 'permissions',
         },
       },
       {
         $match: {
-          'permissions._id': {
-            $all: permission_ids ?? [],
-          },
           role_name: {
             $regex: role_name ?? '',
           },
