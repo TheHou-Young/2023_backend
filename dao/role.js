@@ -1,14 +1,11 @@
 const roleModel = require('../models/role')
 const pagination = require('../utils/pagination')
-const mongoose = require('mongoose')
+const { toObjectId } = require('../utils/map')
 
 class RoleDao {
   // 添加角色
   async createRole({ role_name, permission_ids }, session) {
-    const realPermissionIds =
-      permission_ids?.map((permission) =>
-        mongoose.Types.ObjectId(permission)
-      ) ?? []
+    const realPermissionIds = permission_ids?.map(toObjectId) ?? []
     return await roleModel.create(
       { role_name, permission_ids: realPermissionIds },
       { session }
@@ -27,13 +24,14 @@ class RoleDao {
 
   // 修改角色
   async updateRole({ role_id, role_name, permission_ids }, session) {
+    const realPermissionIds = permission_ids?.map(toObjectId)
     return await roleModel.updateOne(
       { role_id },
       // Object过滤undefined
       JSON.parse(
         JSON.stringify({
           role_name,
-          permission_ids,
+          permission_ids: realPermissionIds,
         })
       ),
       { session }

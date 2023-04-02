@@ -3,6 +3,19 @@
 本数据库使用 MongoDB，因此对于像 MySQL 的对于一对多和多对多的数据模型是不适用的，一对多以内嵌数据为主，多对多以内嵌数组为主
 这必定有数据的冗余
 
+# 目录相关
+
+- config: app.js 的预置加载项目，包括 env，中间件配置等
+- controller: 控制器层，用于接收 http 请求参数，只能依赖于 services
+- dao：数据层，用于做直接的数据库查询等，只能依赖于 models
+- log：日志
+- models：模型层
+- node_modules：依赖
+- public：可对外暴露的文件
+- routes：路由，只依赖于 controller
+- service：服务层，用于组装 dao，因此只能依赖于 dao
+- utils：工具
+
 # 提交代码流程
 
 1. 在多人协作模式里，如果要开发自己的功能，需要从 dev 里面 checkout 一个自己的开发功能的分支：
