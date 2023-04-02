@@ -4,8 +4,15 @@ const mongoose = require('mongoose')
 
 class RoleDao {
   // 添加角色
-  async createRole(roleInfo, session) {
-    return await roleModel.create({ ...roleInfo }, { session })
+  async createRole({ role_name, permission_ids }, session) {
+    const realPermissionIds =
+      permission_ids?.map((permission) =>
+        mongoose.Types.ObjectId(permission)
+      ) ?? []
+    return await roleModel.create(
+      { role_name, permission_ids: realPermissionIds },
+      { session }
+    )
   }
 
   // 删除角色
@@ -22,10 +29,13 @@ class RoleDao {
   async updateRole({ role_id, role_name, permission_ids }, session) {
     return await roleModel.updateOne(
       { role_id },
-      {
-        role_name,
-        permission_ids,
-      },
+      // Object过滤undefined
+      JSON.parse(
+        JSON.stringify({
+          role_name,
+          permission_ids,
+        })
+      ),
       { session }
     )
   }

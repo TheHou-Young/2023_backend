@@ -8,7 +8,7 @@ class RoleService {
    */
   async createRole(roleInfo) {
     let is_exit = await roleDao.findRoleByName(roleInfo.role_name)
-    if (!is_exit) return
+    if (!is_exit) throw Error('已有该名称的角色，请更换名称')
     else {
       return await roleDao.createRole(roleInfo)
     }
@@ -30,7 +30,7 @@ class RoleService {
 
   /**
    * 更新角色
-   * @param {*} param0
+   * @param {*} param
    * @returns
    */
   async updateRole({ role_id, role_name, permission_ids }) {
