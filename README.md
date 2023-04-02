@@ -23,7 +23,7 @@ git add .
 yarn commit
 ```
 
-4. 在`yarn commit`指令里面，选择你所提交代码的类型，比如是 feat\fix\chore 等，并且书写提交的概要和详细内容
+4. 在`yarn commit`指令里面，选择你所提交代码的类型，比如是 feat\fix\chore 等，并且依靠 Angular 团队书写规范来提交的概要和详细内容
 
 下面是几个常见的指令:
 
@@ -31,7 +31,7 @@ yarn commit
 - fix: 修复 bug
 - chore: 添加依赖项
 - refactor: 重构代码，但是不添加功能
-- wip: 添加功能，但未完成(work in progress)
+- wip: 添加功能，但未完成(work in progress)(未配置该指令，后续配置)
 - style: 添加样式
 - doc: 改变文档内容
 
@@ -40,10 +40,10 @@ yarn commit
 1. 推荐使用 vscode，这里配置了 vscode 相关的 eol，不然很容易产生 CRLF 文件
 2. 如果后续有测试环境和线上环境，请在`/config/environment`里的 env 文件里面编写，如果有公共配置项目，就直接写在根目录下的.env 文件中
 3. 关于 routes 文件夹下的路由，在 index.js 已经做了文件夹的文件扫描然后再导入，所以不需要自行编写 app.use 逻辑
-4. 本项目不需要每个地方都写 try catch 逻辑，在 app.js 中已经配置好了 express-async-errors 来进行全局异常处理
+4. 本项目不需要每个地方都写 try catch 逻辑，在 app.js 中已经配置好了 express-async-errors 来进行全局异常处理(不然真的很蠢)
 
 # 启动代码
 
-1. 本地启动：yarn local
-2. 连接 dev 环境：yarn dev
-3. 连接 pro 环境：yarn pro
+1. 本地启动：yarn local(连接本地数据库)
+2. 连接 dev 环境：yarn dev(自测推荐)
+3. 连接 pro 环境：yarn pro(连接线上数据库，未配置)
