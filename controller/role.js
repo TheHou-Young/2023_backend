@@ -32,6 +32,13 @@ class RoleController {
       permission_ids: realPermissionIds,
     })
   }
+
+  getRole = async (req) =>{
+    const { role_id } = req.query
+    return await roleService.findRolePermissionInfo(
+      toObjectId(role_id)
+    )
+  }
 }
 
 const roleController = new RoleController()
