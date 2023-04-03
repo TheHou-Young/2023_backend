@@ -74,21 +74,37 @@ class UserDao {
   // 查询用户列表(分页)
   async findUserList({
     account,
-    department,
+    department, // 暂不做数据过滤
     activation_status,
-    delete_status,
+    role_name,
+    delete_status = 0,
     size,
     page,
   }) {
-    return await pagination(
-      userModel.find({
-        account,
-        department,
-        activation_status,
-        delete_status, // 不被删除的
-      }),
-      { size, page }
-    )
+    return await pagination({
+      model: userModel,
+      matchPip: {
+        activation_status: { $eq: activation_status },
+        delete_status: { $eq: delete_status },
+        account: { $regex: account },
+      },
+      listPip: [
+        {
+          $lookup: {
+            from: 'role',
+            localField: 'role_id',
+            foreignField: '_id',
+            as: 'role',
+          },
+        },
+        {
+          $match: {
+            'role.role_name': { $regex: role_name },
+          },
+        },
+      ],
+      options: { size, page },
+    })
   }
 }
 
