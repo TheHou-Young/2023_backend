@@ -1,22 +1,17 @@
 const roleModel = require('../models/role')
 const pagination = require('../utils/pagination')
-const { toObjectId } = require('../utils/map')
 
 class RoleDao {
   // 添加角色
   async createRole({ role_name, permission_ids }, session) {
-    const realPermissionIds = permission_ids?.map(toObjectId) ?? []
-    return await roleModel.create(
-      { role_name, permission_ids: realPermissionIds },
-      { session }
-    )
+    return await roleModel.create({ role_name, permission_ids }, { session })
   }
 
   // 删除角色
   // TODO: 后续不考虑角色删除
   async deleteRole(role_id, session) {
     return await roleModel.updateOne(
-      { _id: toObjectId(role_id) },
+      { _id: role_id },
       { delete_status: 1 },
       { session }
     )
@@ -24,16 +19,12 @@ class RoleDao {
 
   // 修改角色
   async updateRole({ role_id, role_name, permission_ids }, session) {
-    const realPermissionIds = permission_ids?.map(toObjectId)
     return await roleModel.updateOne(
-      { _id: toObjectId(role_id) },
-      // Object过滤undefined
-      JSON.parse(
-        JSON.stringify({
-          role_name,
-          permission_ids: realPermissionIds,
-        })
-      ),
+      { _id: role_id },
+      {
+        role_name,
+        permission_ids,
+      },
       { session }
     )
   }
@@ -49,40 +40,37 @@ class RoleDao {
 
   //查询角色所有权限信息
   async findRolePermissionInfo(role_id) {
-    return await roleModel
-      .findOne({ _id: toObjectId(role_id) })
-      .populate('permission_ids')
+    return await roleModel.findOne({ _id: role_id }).populate('permission_ids')
   }
 
   // 获取角色列表
   async getRoleList({ role_name, permission_ids, size, page }) {
-    const findRolesWithPermission = roleModel.aggregate([
-      {
-        $match: {
-          permission_ids: {
-            $exists: permission_ids ?? [],
-          },
-          role_name: {
-            $regex: role_name ?? '',
-          },
+    const findRolesWithPermission = pagination({
+      model: roleModel,
+      matchPip: {
+        permission_ids: {
+          $exists: permission_ids,
+        },
+        role_name: {
+          $regex: role_name,
         },
       },
-      {
-        $unwind: '$permission_ids',
-      },
-      {
-        $lookup: {
-          from: 'permission',
-          localField: 'permission_ids',
-          foreignField: '_id',
-          as: 'permissions',
+      listPip: [
+        {
+          $unwind: '$permission_ids',
         },
-      },
-    ])
-    return await pagination(findRolesWithPermission, {
-      size,
-      page,
+        {
+          $lookup: {
+            from: 'permission',
+            localField: 'permission_ids',
+            foreignField: '_id',
+            as: 'permissions',
+          },
+        },
+      ],
+      options: { size, page },
     })
+    return await findRolesWithPermission
   }
 }
 

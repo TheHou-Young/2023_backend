@@ -1,12 +1,14 @@
 const roleService = require('../services/role')
+const { toObjectId } = require('../utils/map')
 
 // TODO: 数据合法性校验应该在controller做过滤
 class RoleController {
   getRoleList = async (req) => {
-    const { role_name, permission_ids, size, page } = req.query
+    const { role_name = '', permission_ids = null, size, page } = req.query
+    const realPermissionIds = permission_ids?.map(toObjectId) ?? []
     return await roleService.getRoleList({
       role_name,
-      permission_ids,
+      permission_ids: realPermissionIds,
       size,
       page,
     })
@@ -14,12 +16,21 @@ class RoleController {
 
   createRole = async (req) => {
     const { role_name, permission_ids } = req.body
-    return await roleService.createRole({ role_name, permission_ids })
+    const realPermissionIds = permission_ids?.map(toObjectId)
+    return await roleService.createRole({
+      role_name,
+      permission_ids: realPermissionIds,
+    })
   }
 
   updateRole = async (req) => {
-    const { role_id, role_name, permission_ids } = req.body
-    return await roleService.updateRole({ role_id, role_name, permission_ids })
+    const { role_id, role_name = null, permission_ids = null } = req.body
+    const realPermissionIds = permission_ids?.map(toObjectId)
+    return await roleService.updateRole({
+      role_id: toObjectId(role_id),
+      role_name,
+      permission_ids: realPermissionIds,
+    })
   }
 }
 
