@@ -16,7 +16,7 @@ class RoleDao {
   // TODO: 后续不考虑角色删除
   async deleteRole(role_id, session) {
     return await roleModel.updateOne(
-      { role_id },
+      { _id: toObjectId(role_id) },
       { delete_status: 1 },
       { session }
     )
@@ -26,7 +26,7 @@ class RoleDao {
   async updateRole({ role_id, role_name, permission_ids }, session) {
     const realPermissionIds = permission_ids?.map(toObjectId)
     return await roleModel.updateOne(
-      { role_id },
+      { _id: toObjectId(role_id) },
       // Object过滤undefined
       JSON.parse(
         JSON.stringify({
@@ -40,7 +40,7 @@ class RoleDao {
 
   // 查询角色
   async findRoleById(role_id) {
-    return await roleModel.findById(role_id)
+    return await roleModel.findById(toObjectId(role_id))
   }
 
   async findRoleByName(role_name) {
@@ -49,7 +49,9 @@ class RoleDao {
 
   //查询角色所有权限信息
   async findRolePermissionInfo(role_id) {
-    return await roleModel.findOne({ role_id }).populate('permission_ids')
+    return await roleModel
+      .findOne({ _id: toObjectId(role_id) })
+      .populate('permission_ids')
   }
 
   // 获取角色列表
