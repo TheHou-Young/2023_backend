@@ -22,6 +22,28 @@ class UserController {
     const { user_name, password, account } = req.body
     return await userService.createUser({ user_name, password, account })
   }
+
+  deleteUser = async (req) => {
+    const { account } = req.body
+    return await userService.deleteUser({ account })
+  }
+
+  updateUser = async (req) => {
+    const {
+      account,
+      user_name = null,
+      password = null,
+      new_account,
+      role_id = null,
+    } = req.body
+    return await userService.updateUser({
+      account,
+      user_name,
+      password,
+      new_account,
+      role_id,
+    })
+  }
 }
 
 const userController = new UserController()

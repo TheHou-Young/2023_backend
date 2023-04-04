@@ -6,5 +6,7 @@ const router = express.Router()
 
 router.get('/user/list', wrapper(userController.getUserList))
 router.post('/user/create', wrapper(userController.createUser))
+router.delete('/user/delete', wrapper(userController.deleteUser))
+router.put('/user/update', wrapper(userController.updateUser))
 
 module.exports = router

@@ -4,7 +4,7 @@ const pagination = require('../utils/pagination')
 class UserDao {
   // 根据手机号(账户)查询个人信息
   async findUserByAccount(account) {
-    return await userModel.findOne({ account })
+    return await userModel.findOne({ account, delete_status: 0 })
   }
 
   // 创建账户
