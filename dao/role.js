@@ -31,7 +31,7 @@ class RoleDao {
 
   // 查询角色
   async findRoleById(role_id) {
-    return await roleModel.findById(toObjectId(role_id))
+    return await roleModel.findById(role_id)
   }
 
   async findRoleByName(role_name) {
