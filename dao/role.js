@@ -3,8 +3,8 @@ const pagination = require('../utils/pagination')
 
 class RoleDao {
   // 添加角色
-  async createRole({ role_name, permission_ids }, session) {
-    return await roleModel.create({ role_name, permission_ids }, { session })
+  async createRole({ role_name, permission_ids }) {
+    return await roleModel.create({ role_name, permission_ids })
   }
 
   // 删除角色

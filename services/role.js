@@ -1,4 +1,5 @@
 const roleDao = require('../dao/role')
+const _ = require("lodash")
 
 class RoleService {
   /**
@@ -8,7 +9,9 @@ class RoleService {
    */
   async createRole({ role_name, permission_ids }) {
     let is_exit = await roleDao.findRoleByName(role_name)
-    if (!is_exit) throw Error('已有该名称的角色，请更换名称')
+    if (!_.isEmpty(is_exit)) {
+      return new Error('已有该名称的角色，请更换名称')
+    }
     else {
       return await roleDao.createRole({ role_name, permission_ids })
     }
