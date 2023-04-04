@@ -8,7 +8,7 @@ class RoleDao {
   }
 
   // 删除角色
-  // TODO: 后续不考虑角色删除
+  // TODO——删除角色 并且删除使用了该角色的用户
   async deleteRole(role_id, session) {
     return await roleModel.updateOne(
       { _id: role_id },
@@ -39,8 +39,12 @@ class RoleDao {
   }
 
   //查询角色所有权限信息
+  //TODO——连接后并没查询到permission表的内容
   async findRolePermissionInfo(role_id) {
-    return await roleModel.findOne({ _id: role_id }).populate('permission_ids')
+    const permissionDao = require('../models/permission')
+    const data = await roleModel.findById(role_id).populate('permission_ids').exec()
+    //console.log(data.permission_ids)
+    return data
   }
 
   // 获取角色列表

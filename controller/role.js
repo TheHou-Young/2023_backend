@@ -37,6 +37,11 @@ class RoleController {
     const { role_id } = req.query
     return await roleService.findRolePermissionInfo(role_id)
   }
+
+  deleteRole = async (req) => { 
+    const {role_id} = req.query
+    return await roleService.deleteRole(role_id)
+  }
 }
 
 const roleController = new RoleController()

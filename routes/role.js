@@ -9,5 +9,6 @@ router.get('/role/list', wrapper(roleController.getRoleList))
 router.post('/role/create', wrapper(roleController.createRole))
 router.put('/role/update', wrapper(roleController.updateRole))
 router.get('/role/get', wrapper(roleController.getRole))
+router.get('/role/delete', wrapper(roleController.deleteRole))
 
 module.exports = router
