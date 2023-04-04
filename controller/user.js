@@ -1,23 +1,26 @@
-const roleService = require('../services/role')
-const { toObjectId } = require('../utils/map')
+const userService = require('../services/user')
 
-// TODO: 数据合法性校验应该在controller做过滤
 class UserController {
   getUserList = async (req) => {
     const {
       role_name = '',
-      activation_status = 1,
+      activation_status = null,
       account,
       size,
       page,
     } = req.query
-    return await roleService.getRoleList({
+    return await userService.getUserList({
       role_name,
       activation_status,
       account,
       size,
       page,
     })
+  }
+
+  createUser = async (req) => {
+    const { user_name, password, account } = req.body
+    return await userService.createUser({ user_name, password, account })
   }
 }
 

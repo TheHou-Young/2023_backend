@@ -1,5 +1,6 @@
 const userDao = require('../dao/user')
 const roleDao = require('../dao/role')
+const _ = require('lodash')
 
 class UserService {
   /**
@@ -8,11 +9,19 @@ class UserService {
    * @returns {Promise<*>}
    */
   async createUser(userInfo) {
-    let is_exit = await userDao.findUserByAccount(userInfo.account)
-    if (!is_exit) {
-      return
-    }
-    const result = await userDao.createUser(userInfo)
+    // const is_exit = await userDao.findUserByAccount(userInfo.account)
+    // if (!_.isEmpty(is_exit)) {
+    //   throw new Error('不允许重复创建')
+    // }
+    const defaultRoleArray = await roleDao.getRoleList({})
+    const {
+      list: [defaultRole],
+    } = defaultRoleArray
+    console.log(defaultRole._id)
+    const result = await userDao.createUser({
+      ...userInfo,
+      role_id: defaultRole._id,
+    })
     return result
   }
 

@@ -8,14 +8,10 @@ class UserDao {
   }
 
   // 创建账户
-  async createUser(userInfo, session) {
-    return await userModel.create(
-      {
-        ...userInfo,
-        activation_status: 1,
-      },
-      { session }
-    )
+  async createUser(userInfo) {
+    return await userModel.create({
+      ...userInfo,
+    })
   }
 
   // 激活账户

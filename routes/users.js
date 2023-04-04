@@ -4,7 +4,7 @@ const userController = require('../controller/user')
 
 const router = express.Router()
 
-/* GET users listing. */
 router.get('/user/list', wrapper(userController.getUserList))
+router.post('/user/create', wrapper(userController.createUser))
 
 module.exports = router

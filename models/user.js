@@ -23,16 +23,17 @@ const userSchema = new mongoose.Schema(
       ref: 'role',
       required: true,
     },
-    //用户所属部门
-    department_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'department',
-      required: true,
-    },
-    //用户激活状态（默认为false）
+    // 用户所属部门(暂定)
+    // department_id: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'department',
+    //   required: true,
+    // },
+    //用户激活状态(默认为0)
     activation_status: {
-      type: Boolean,
-      default: false,
+      type: Number,
+      enum: [0, 1],
+      default: 1,
     },
     //数据是否删除
     delete_status: {

@@ -44,7 +44,7 @@ class RoleDao {
   }
 
   // 获取角色列表
-  async getRoleList({ role_name, permission_ids, size, page }) {
+  async getRoleList({ role_name = '', permission_ids = [], size, page }) {
     const findRolesWithPermission = pagination({
       model: roleModel,
       matchPip: {
