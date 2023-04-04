@@ -1,22 +1,10 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const wrapper = require('../utils/wrapper')
+const userController = require('../controller/user')
 
-function getUserFromDb() {
-  // throw new Error('err')
-  return new Promise(() => {
-    throw new Error('this is an error')
-  })
-  // return Promise.reject('this is an error')
-}
-
-async function ace() {
-  await getUserFromDb()
-}
+const router = express.Router()
 
 /* GET users listing. */
-router.get('/user-test', async (req, res, next) => {
-  await ace()
-  res.json({ a: 1 }).end()
-})
+router.get('/user/list', wrapper(userController.getUserList))
 
 module.exports = router

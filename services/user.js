@@ -70,7 +70,7 @@ class UserService {
     return await userDao.findUserById(user_id)
   }
 
-  async findUserList({ account, department, activation_status, size, page }) {
+  async getUserList({ account, department, activation_status, size, page }) {
     return await userDao.findUserList({
       account,
       department,
