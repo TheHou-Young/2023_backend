@@ -13,11 +13,7 @@ class UserService {
     // if (!_.isEmpty(is_exit)) {
     //   throw new Error('不允许重复创建')
     // }
-    const defaultRoleArray = await roleDao.getRoleList({})
-    const {
-      list: [defaultRole],
-    } = defaultRoleArray
-    console.log(defaultRole._id)
+    const defaultRole = await roleDao.getDefaultRole()
     const result = await userDao.createUser({
       ...userInfo,
       role_id: defaultRole._id,

@@ -72,6 +72,10 @@ class RoleDao {
     })
     return await findRolesWithPermission
   }
+
+  async getDefaultRole() {
+    return await roleModel.findOne()
+  }
 }
 
 const roleDao = new RoleDao()
