@@ -9,9 +9,10 @@ const wrapper = (handler) => async (req, res, next) => {
     })
     res.send(result)
   } catch (error) {
-    throw new Fail({
+    const errorResult = new Fail({
       msg: error.message,
     })
+    res.send(errorResult)
   }
 }
 
