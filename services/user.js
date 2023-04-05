@@ -71,10 +71,18 @@ class UserService {
     return await userDao.findUserById(user_id)
   }
 
-  async getUserList({ account, department, activation_status, size, page }) {
+  async getUserList({
+    account,
+    role_name,
+    department,
+    activation_status,
+    size,
+    page,
+  }) {
     return await userDao.findUserList({
       account,
       department,
+      role_name,
       activation_status,
       size,
       page,
@@ -92,13 +100,12 @@ class UserService {
 
   /**
    * 查询用户拥有的全部权限
-   * @param account 
-   * @returns 
+   * @param account
+   * @returns
    */
-  async findUserPermissionList(account){
+  async findUserPermissionList(account) {
     return await userDao.findUserPermissionList(account)
   }
-
 }
 
 const userService = new UserService()

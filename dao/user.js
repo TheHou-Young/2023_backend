@@ -81,9 +81,9 @@ class UserDao {
     return await pagination({
       model: userModel,
       matchPip: {
-        activation_status: { $eq: activation_status },
-        delete_status: { $eq: delete_status },
-        account: { $regex: account },
+        // activation_status: { $eq: activation_status },
+        // delete_status: { $eq: delete_status },
+        // account: { $regex: account },
       },
       listPip: [
         {
@@ -105,20 +105,20 @@ class UserDao {
   }
 
   // 获取指定用户的权限列表
-  async findUserPermissionList(account){
+  async findUserPermissionList(account) {
     const aggregateQuery = [
       {
         $match: {
-          'account': { $regex: account }
-        }
+          account: { $regex: account },
+        },
       },
       {
         $lookup: {
           from: 'roles',
           localField: 'role_id',
           foreignField: '_id',
-          as: 'role'
-        }
+          as: 'role',
+        },
       },
       // {
       //   $unwind: '$role.permission_ids'
@@ -128,14 +128,13 @@ class UserDao {
           from: 'permissions',
           localField: 'role.permission_ids',
           foreignField: '_id',
-          as: 'permissions'
-        }
-      }
+          as: 'permissions',
+        },
+      },
     ]
     const result = await userModel.aggregate(aggregateQuery)
     return result[0].permissions
   }
-
 }
 
 const userDao = new UserDao()
