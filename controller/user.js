@@ -6,15 +6,15 @@ class UserController {
       role_name = '',
       activation_status = null,
       account = '',
-      size: _size,
-      page: _page,
+      size,
+      page,
     } = req.query
     return await userService.getUserList({
       role_name,
       activation_status,
       account,
-      size: Number(_size),
-      page: Number(_page),
+      size,
+      page,
     })
   }
 

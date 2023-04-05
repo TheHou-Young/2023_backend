@@ -81,9 +81,9 @@ class UserDao {
     return await pagination({
       model: userModel,
       matchPip: {
-        // activation_status: { $eq: activation_status },
-        // delete_status: { $eq: delete_status },
-        // account: { $regex: account },
+        activation_status: { $eq: activation_status },
+        delete_status: { $eq: delete_status },
+        account: { $regex: account },
       },
       listPip: [
         {
