@@ -5,16 +5,16 @@ class UserController {
     const {
       role_name = '',
       activation_status = null,
-      account,
-      size,
-      page,
+      account = '',
+      size: _size,
+      page: _page,
     } = req.query
     return await userService.getUserList({
       role_name,
       activation_status,
       account,
-      size,
-      page,
+      size: Number(_size),
+      page: Number(_page),
     })
   }
 
@@ -46,7 +46,7 @@ class UserController {
   }
 
   getUserPermissionList = async (req) => {
-    const {account} = req.query
+    const { account } = req.query
     return await userService.findUserPermissionList(account)
   }
 }
