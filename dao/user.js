@@ -133,7 +133,7 @@ class UserDao {
       }
     ]
     const result = await userModel.aggregate(aggregateQuery)
-    return result
+    return result[0].permissions
   }
 
 }
