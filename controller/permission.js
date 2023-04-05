@@ -1,4 +1,8 @@
 const permissionService = require("../services/permission")
+const DEFAULT = {
+  page: 1,
+  size: 10,
+}
 
 class PermissionController {
   createPermission = async (req) => {
@@ -8,6 +12,11 @@ class PermissionController {
       description,
       permission_pid,
     })
+  }
+
+  getPermissionList = async (req) => {
+    const { page = DEFAULT.page, size = DEFAULT.size } = req.query
+    return await permissionService.findAllPermission(page, size)
   }
 }
 

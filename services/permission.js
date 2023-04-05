@@ -23,11 +23,20 @@ class PermissionService {
    * @param permission_id
    * @returns
    */
+  // TODO——许可不可删除
   async deletePermission(permission_id) {
     const result = await permissionDao.findPermissionById(permission_id)
     if (result) return
     if (result.delete_status) return
     else return await permissionDao.deletePermission(permission_id)
+  }
+
+  /**
+   * 查询数据库中所有的Permission
+   * @returns
+   */
+  async findAllPermission(page, size) {
+    return await permissionDao.findAllPermission(page, size)
   }
 
   /**
