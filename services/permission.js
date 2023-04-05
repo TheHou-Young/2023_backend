@@ -35,8 +35,8 @@ class PermissionService {
    * 查询数据库中所有的Permission
    * @returns
    */
-  async findAllPermission(page, size) {
-    return await permissionDao.findAllPermission(page, size)
+  async findAllPermission() {
+    return await permissionDao.findAllPermission()
   }
 
   /**

@@ -18,12 +18,13 @@ class PermissionDao {
     return await permissionModel.findById(permission_id)
   }
 
-  //查询所有许可——分页
+  //查询所有许可
+  //TODO——不需要分页
   async findAllPermission(page, size) {
     return await permissionModel
       .find()
-      .skip((page - 1) * size)
-      .limit(size)
+      // .skip((page - 1) * size)
+      // .limit(size)
   }
 
   //查询多个许可
