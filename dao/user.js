@@ -88,7 +88,7 @@ class UserDao {
       listPip: [
         {
           $lookup: {
-            from: 'role',
+            from: 'roles',
             localField: 'role_id',
             foreignField: '_id',
             as: 'role',

@@ -65,7 +65,7 @@ class RoleDao {
         },
         {
           $lookup: {
-            from: 'permission',
+            from: 'permissions',
             localField: 'permission_ids',
             foreignField: '_id',
             as: 'permissions',
