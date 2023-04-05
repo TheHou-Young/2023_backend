@@ -1,5 +1,6 @@
-const userDao = require('../dao/userDao')
-const roleDao = require('../dao/roleDao')
+const userDao = require('../dao/user')
+const roleDao = require('../dao/role')
+const _ = require('lodash')
 
 class UserService {
   /**
@@ -8,16 +9,16 @@ class UserService {
    * @returns {Promise<*>}
    */
   async createUser(userInfo) {
-    try {
-      let is_exit = await userDao.findUserByAccount(userInfo.account)
-      if (!is_exit) {
-        return
-      }
-      const result = await userDao.createUser(userInfo)
-      return result
-    } catch (error) {
-      throw new Error(e.message)
-    }
+    // const is_exit = await userDao.findUserByAccount(userInfo.account)
+    // if (!_.isEmpty(is_exit)) {
+    //   throw new Error('不允许重复创建')
+    // }
+    const defaultRole = await roleDao.getDefaultRole()
+    const result = await userDao.createUser({
+      ...userInfo,
+      role_id: defaultRole._id,
+    })
+    return result
   }
 
   /**
@@ -26,13 +27,9 @@ class UserService {
    * @returns
    */
   async setActivationStatus(account) {
-    try {
-      const result = await userDao.findUserByAccount(account)
-      let status = result.activation_status === 1 ? 0 : 1
-      return await userDao.updateActivationStatus(account, status)
-    } catch (error) {
-      throw new Error(e.message)
-    }
+    const result = await userDao.findUserByAccount(account)
+    let status = result.activation_status === 1 ? 0 : 1
+    return await userDao.updateActivationStatus(account, status)
   }
 
   /**
@@ -41,17 +38,9 @@ class UserService {
    * @returns
    */
   async deleteUser(account) {
-    try {
-      const result = await userDao.findUserByAccount(account)
-      if (result) return
-      if (result.delete_status) {
-        return
-      } else {
-        return await userDao.updateDeleteStatus(account)
-      }
-    } catch (error) {
-      throw new Error(e.message)
-    }
+    const result = await userDao.findUserByAccount(account)
+    if (_.isEmpty(result)) throw new Error('不允许删除不存在的账号')
+    return await userDao.updateDeleteStatus(account)
   }
 
   /**
@@ -82,10 +71,18 @@ class UserService {
     return await userDao.findUserById(user_id)
   }
 
-  async findUserList({ account, department, activation_status, size, page }) {
+  async getUserList({
+    account,
+    role_name,
+    department,
+    activation_status,
+    size,
+    page,
+  }) {
     return await userDao.findUserList({
       account,
       department,
+      role_name,
       activation_status,
       size,
       page,
@@ -94,15 +91,20 @@ class UserService {
 
   /**
    * 查询用户对应角色信息
-   * @param account 
-   * @returns 
+   * @param account
+   * @returns
    */
   async findUserRoleInfo(account) {
-    try {
-      return await userDao.findUserRoleInfo(account)
-    } catch (error) {
-      throw new Error(e.message)
-    }
+    return await userDao.findUserRoleInfo(account)
+  }
+
+  /**
+   * 查询用户拥有的全部权限
+   * @param account
+   * @returns
+   */
+  async findUserPermissionList(account) {
+    return await userDao.findUserPermissionList(account)
   }
 }
 

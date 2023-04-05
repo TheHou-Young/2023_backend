@@ -18,6 +18,15 @@ class PermissionDao {
     return await permissionModel.findById(permission_id)
   }
 
+  //查询所有许可
+  //TODO——不需要分页
+  async findAllPermission() {
+    return await permissionModel
+      .find()
+      // .skip((page - 1) * size)
+      // .limit(size)
+  }
+
   //查询多个许可
   async findPermissionsById(permission_ids) {
     return await permissionModel.find({ _id: { $in: permission_ids } })
@@ -26,8 +35,6 @@ class PermissionDao {
   async findPermissionByname(permission_name) {
     return await permissionModel.findOne({ permission_name })
   }
-
-  //修改许可
 }
 
 const permissionDao = new PermissionDao()

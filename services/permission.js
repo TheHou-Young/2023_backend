@@ -1,4 +1,5 @@
-const permissionDao = require('../dao/permissionDao')
+const permissionDao = require("../dao/permission")
+const _ = require("lodash")
 
 class PermissionService {
   /**
@@ -10,8 +11,9 @@ class PermissionService {
     const result = await permissionDao.findPermissionByname(
       permissionInfo.permission_name
     )
-    if (!is_exit) return
-    else {
+    if (!_.isEmpty(result)) {
+      throw new Error("该许可已经存在")
+    } else {
       return await permissionDao.createPermission(permissionInfo)
     }
   }
@@ -21,11 +23,20 @@ class PermissionService {
    * @param permission_id
    * @returns
    */
+  // TODO——许可不可删除
   async deletePermission(permission_id) {
     const result = await permissionDao.findPermissionById(permission_id)
     if (result) return
     if (result.delete_status) return
     else return await permissionDao.deletePermission(permission_id)
+  }
+
+  /**
+   * 查询数据库中所有的Permission
+   * @returns
+   */
+  async findAllPermission() {
+    return await permissionDao.findAllPermission()
   }
 
   /**

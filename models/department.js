@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
-const permissionSchema = new mongoose.Schema(
+const departmentSchema = new mongoose.Schema(
   {
     //权限名字
-    permission_name: {
+    department_name: {
       type: String,
       required: true,
     },
@@ -13,9 +13,9 @@ const permissionSchema = new mongoose.Schema(
       required: true,
     },
     //权限的父id
-    permission_pid: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'permission',
+    department_pid: {
+      type: String,
+      required: true,
     },
     //数据是否删除
     delete_status: {
@@ -38,5 +38,5 @@ const permissionSchema = new mongoose.Schema(
   }
 )
 
-const permission = mongoose.model('permission', permissionSchema)
-module.exports = permission
+const department = mongoose.model('department', departmentSchema)
+module.exports = department
