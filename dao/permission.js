@@ -20,7 +20,7 @@ class PermissionDao {
 
   //查询所有许可
   //TODO——不需要分页
-  async findAllPermission(page, size) {
+  async findAllPermission() {
     return await permissionModel
       .find()
       // .skip((page - 1) * size)
