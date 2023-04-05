@@ -1,3 +1,4 @@
+const permission = require('../models/permission')
 const userModel = require('../models/user')
 const pagination = require('../utils/pagination')
 
@@ -102,6 +103,39 @@ class UserDao {
       options: { size, page },
     })
   }
+
+  // 获取指定用户的权限列表
+  async findUserPermissionList(account){
+    const aggregateQuery = [
+      {
+        $match: {
+          'account': { $regex: account }
+        }
+      },
+      {
+        $lookup: {
+          from: 'roles',
+          localField: 'role_id',
+          foreignField: '_id',
+          as: 'role'
+        }
+      },
+      // {
+      //   $unwind: '$role.permission_ids'
+      // },
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'role.permission_ids',
+          foreignField: '_id',
+          as: 'permissions'
+        }
+      }
+    ]
+    const result = await userModel.aggregate(aggregateQuery)
+    return result
+  }
+
 }
 
 const userDao = new UserDao()

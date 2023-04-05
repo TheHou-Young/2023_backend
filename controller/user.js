@@ -44,6 +44,11 @@ class UserController {
       role_id,
     })
   }
+
+  getUserPermissionList = async (req) => {
+    const {account} = req.query
+    return await userService.findUserPermissionList(account)
+  }
 }
 
 const userController = new UserController()

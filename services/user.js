@@ -89,6 +89,16 @@ class UserService {
   async findUserRoleInfo(account) {
     return await userDao.findUserRoleInfo(account)
   }
+
+  /**
+   * 查询用户拥有的全部权限
+   * @param account 
+   * @returns 
+   */
+  async findUserPermissionList(account){
+    return await userDao.findUserPermissionList(account)
+  }
+
 }
 
 const userService = new UserService()
