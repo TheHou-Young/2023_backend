@@ -17,6 +17,16 @@ const permissionSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'permission',
     },
+    //页面or按钮
+    type: {
+      type: Number,
+      enum: [1, 2],// 1-页面，2-按钮
+      required: true,
+    },
+    //调用后端接口鉴权使用
+    api_route_name: {
+      type: String,
+    },
     //数据是否删除
     delete_status: {
       type: Number,
