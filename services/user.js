@@ -38,9 +38,9 @@ class UserService {
    * @returns
    */
   async deleteUser(account) {
-    const result = await userDao.findUserByAccount(account)
-    if (_.isEmpty(result)) throw new Error('不允许删除不存在的账号')
-    return await userDao.updateDeleteStatus(account)
+    const result = await userDao.updateDeleteStatus(account)
+    if (_.isNil(result)) throw new Error('不允许删除不存在的账号')
+    return result
   }
 
   /**

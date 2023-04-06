@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken")
+const jwt = require('jsonwebtoken')
 
 //签名的密钥
-const jwt_secret = "mySecretKey"
+const jwt_secret = 'mySecretKey'
 //token过期时间为10分钟
 const jwt_expiration = 60 * 10
 const jwt_refresh_expiration = 60 * 10 * 1000
@@ -22,5 +22,12 @@ const createJwt = (account) => {
   return [refresh_token_maxage, token]
 }
 
-module.exports = createJwt
+const verifyJwt = (token) => {
+  const result = jwt.verify(token, jwt_secret, null, null)
+  return result
+}
 
+module.exports = {
+  createJwt,
+  verifyJwt,
+}
