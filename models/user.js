@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
     //   ref: 'department',
     //   required: true,
     // },
-    //用户激活状态(默认为0)
+    //用户激活状态(默认为1)
     activation_status: {
       type: Number,
       enum: [0, 1],

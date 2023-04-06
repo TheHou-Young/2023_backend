@@ -1,6 +1,6 @@
 const redis = require('redis')
 
-const _ = redis.createClient({
+const redisClient = redis.createClient({
   socket: {
     port: process.env.REDIS_CONFIG_PORT,
     host: process.env.REDIS_CONFIG_HOST,
@@ -8,8 +8,8 @@ const _ = redis.createClient({
   password: process.env.REDIS_CONFIG_PWD,
 })
 
-const connectRedis = (redisClient = _) => {
-  redisClient
+const connectRedis = (rc = redisClient) => {
+  rc
     .connect()
     .then(() => {
       console.log('Redis 连接成功')
@@ -20,4 +20,4 @@ const connectRedis = (redisClient = _) => {
     })
 }
 
-module.exports = { connectRedis }
+module.exports = { connectRedis , redisClient}
