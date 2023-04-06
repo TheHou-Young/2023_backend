@@ -9,8 +9,7 @@ const redisClient = redis.createClient({
 })
 
 const connectRedis = (rc = redisClient) => {
-  rc
-    .connect()
+  rc.connect()
     .then(() => {
       console.log('Redis 连接成功')
     })
@@ -20,4 +19,4 @@ const connectRedis = (rc = redisClient) => {
     })
 }
 
-module.exports = { connectRedis , redisClient}
+module.exports = { connectRedis, redisClient }

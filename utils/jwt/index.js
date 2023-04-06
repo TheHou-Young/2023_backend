@@ -22,8 +22,8 @@ const createJwt = (account) => {
   return [refresh_token_maxage, token]
 }
 
-const verifyJwt = (token) => {
-  const result = jwt.verify(token, jwt_secret, null, null)
+const verifyJwt = async (token) => {
+  const result = await jwt.verify(token, jwt_secret, null, null)
   return result
 }
 

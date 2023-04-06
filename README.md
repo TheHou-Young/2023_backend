@@ -9,6 +9,7 @@
 - controller: 控制器层，用于接收 http 请求参数，只能依赖于 services
 - dao：数据层，用于做直接的数据库查询等，只能依赖于 models
 - log：日志
+- middlewares: 中间件
 - models：模型层
 - node_modules：依赖
 - public：可对外暴露的文件

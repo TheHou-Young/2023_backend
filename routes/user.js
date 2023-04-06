@@ -9,6 +9,9 @@ router.post('/user/create', wrapper(userController.createUser))
 router.delete('/user/delete', wrapper(userController.deleteUser))
 router.patch('/user/update', wrapper(userController.updateUser))
 
-router.get('/user/permissionList', wrapper(userController.getUserPermissionList))
+router.get(
+  '/user/permissionList',
+  wrapper(userController.getUserPermissionList)
+)
 
 module.exports = router

@@ -1,4 +1,3 @@
-const permission = require('../models/permission')
 const userModel = require('../models/user')
 const pagination = require('../utils/pagination')
 
