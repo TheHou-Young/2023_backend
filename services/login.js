@@ -7,7 +7,7 @@ class LoginService {
   async login({ account, password }) {
     const result = await userDao.findUserByAccountWithoutFilter({
       account,
-      password,
+      password, // TODO: 需要加多一个角色来判断是哪个账户
     })
     switch (true) {
       case _.isEmpty(result):
@@ -19,10 +19,10 @@ class LoginService {
     }
     const [refresh_token_maxage, token] = createJwt(account)
     await redisClient.set(
-      result.account,
+      result.account, // 有潜在bug，因为有一个account但是有多个账号的情况
       JSON.stringify({
         expires: refresh_token_maxage,
-        token: token,
+        token: token, // TODO: set的key值我理解用token的加盐值，value为result会不会更好一些？
       })
     )
     return {
