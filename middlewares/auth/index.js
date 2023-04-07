@@ -1,27 +1,20 @@
 const { redisClient } = require('../../config/db/redis')
 const { verifyJwt } = require('../../utils/jwt')
-const user = require('../../models/user')
+const { toObjectId } = require('../../utils/map')
+const roleModel = require('../../models/role')
 
 // 获取用户下的所有权限
-const permissionGetter = async (account) => {
-  const result = await user.aggregate([
+const permissionGetter = async (role_id) => {
+  const result = await roleModel.aggregate([
     {
       $match: {
-        account: { $regex: account },
-      },
-    },
-    {
-      $lookup: {
-        from: 'roles',
-        localField: 'role_id',
-        foreignField: '_id',
-        as: 'role',
+        _id: toObjectId(role_id),
       },
     },
     {
       $lookup: {
         from: 'permissions',
-        localField: 'role.permission_ids',
+        localField: 'permission_ids',
         foreignField: '_id',
         as: 'permissions',
       },
@@ -39,11 +32,9 @@ const permissionGetter = async (account) => {
 const auth = async (req, _, next) => {
   const token = req?.headers?.authorization
   const { account, role_id } = await verifyJwt(token)
-  console.log(account, role_id)
-  const object = await redisClient.get(role_id)
-
-  const res = await permissionGetter(account)
-  console.log(JSON.stringify(res))
+  const object = await redisClient.get?.('*')
+  const res = await permissionGetter(role_id)
+  console.log(object)
   next()
 }
 
