@@ -3,11 +3,17 @@ const path = require('path')
 const logger = require('morgan')
 const lodash = require('lodash')
 
-const defaultPath = path.join(__dirname, '../../log/access.log')
+const defaultPath = path.join(__dirname, '../../log')
+const defaultPathWithFile = `${defaultPath}/access.log`
+fs.mkdirSync(defaultPath, { recursive: true }) // 创建文件夹
+fs.appendFileSync(defaultPath, '', { recursive: true }) // 创建文件
+console.log('log文件创建成功')
+
 const loggerConfig = (app) => {
-  fs.mkdirSync(defaultPath, { recursive: true }) // 本地创建log文件
   // 配置日志的本地文件路径
-  const accessLogStream = fs.createWriteStream(defaultPath, { flags: 'a' })
+  const accessLogStream = fs.createWriteStream(defaultPathWithFile, {
+    flags: 'a',
+  })
   // 往日志添加用户信息
   logger.token('id', (req) => req.headers.authorization)
   // 往日志添加时间
