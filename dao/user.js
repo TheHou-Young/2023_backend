@@ -2,8 +2,13 @@ const userModel = require('../models/user')
 const pagination = require('../utils/pagination')
 
 class UserDao {
-  async findUserByAccountWithoutFilter({ account, password }) {
-    return await userModel.findOne({ account, password, delete_status: 0 })
+  async findUserWithRoleId({ account, password, role_id }) {
+    return await userModel.findOne({
+      account,
+      password,
+      role_id,
+      delete_status: 0,
+    })
   }
 
   // 根据手机号(账户)查询个人信息
@@ -139,8 +144,8 @@ class UserDao {
         },
       },
     ]
-    const result = await userModel.aggregate(aggregateQuery)
-    return result[0].permissions
+    const [result] = await userModel.aggregate(aggregateQuery)
+    return result.permissions
   }
 }
 

@@ -4,20 +4,24 @@ const { redisClient } = require('../config/db/redis')
 const _ = require('lodash')
 
 class LoginService {
-  async login({ account, password }) {
-    const result = await userDao.findUserByAccountWithoutFilter({
+  async login({ account, password, role_id }) {
+    const result = await userDao.findUserWithRoleId({
       account,
-      password, // TODO: 需要加多一个角色来判断是哪个账户
+      password,
+      role_id,
     })
     switch (true) {
       case _.isEmpty(result):
-        throw new Error('请检查账号或密码是否出错.')
+        throw new Error('请检查账号、密码或登录角色是否出错.')
       case result.activation_status === 0:
         throw new Error('该号码未被激活，请重试.')
       default:
         break
     }
-    const [refresh_token, refresh_token_maxage, access_token] = createJwt(account)
+    const [refresh_token, refresh_token_maxage, access_token] = createJwt({
+      account,
+      role_id,
+    })
     await redisClient.set(
       refresh_token,
       JSON.stringify({
