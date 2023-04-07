@@ -8,7 +8,13 @@ const MESSAGE = {
   [BACKEND_CODE.OK]: '成功',
 }
 
+const REDIS_DB = {
+  login: 0,
+  permission: 1,
+}
+
 module.exports = {
   BACKEND_CODE,
   MESSAGE,
+  REDIS_DB,
 }

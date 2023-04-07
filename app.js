@@ -9,7 +9,6 @@ const loggerConfig = require('./config/logger')
 const { errorConfig, notExistConfig } = require('./middlewares/error')
 const httpHeader = require('./middlewares/httpHeader')
 const translateNumber = require('./middlewares/translateNumber')
-
 const app = express()
 
 loadEnv() // 加载env环境
