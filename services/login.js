@@ -17,17 +17,18 @@ class LoginService {
       default:
         break
     }
-    const [refresh_token_maxage, token] = createJwt(account)
+    const [refresh_token, refresh_token_maxage, access_token] = createJwt(account)
     await redisClient.set(
-      result.account,
+      refresh_token,
       JSON.stringify({
+        account: result.account,
         expires: refresh_token_maxage,
-        token: token,
       })
     )
     return {
       user: result,
-      token: token,
+      access_token: access_token,
+      refresh_token: refresh_token,
     }
   }
 }
