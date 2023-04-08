@@ -29,11 +29,13 @@ const permissionGetter = async (role_id) => {
   return result
 }
 
+// TODO by Kaidi：auth拦截如果调用数据库来判断权限，会有至少2个RTT开销，至少200ms的延迟，考虑这里使用内存或者redis缓存
 const auth = async (req, _, next) => {
   const token = req?.headers?.authorization
   const { account, role_id } = verifyJwt(token)
-  const object = await redisClient.get?.('*')
-  const res = await permissionGetter(role_id)
+  const object = await redisClient.keys?.('*')
+  console.log('object', object)
+  // const res = await permissionGetter(role_id)
   // console.log(object)
   next()
 }

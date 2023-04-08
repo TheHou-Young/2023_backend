@@ -14,11 +14,11 @@ const app = express()
 loadEnv() // 加载env环境
 connectDB() // 连接数据库
 
-app?.use(logger('dev'))
-app?.use(express.json())
-app?.use(express.urlencoded({ extended: false }))
-app?.use(cookieParser())
-app?.use(express.static(path.join(__dirname, './public')))
+app.use(logger('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
+app.use(express.static(path.join(__dirname, './public')))
 
 app.use('*', httpHeader)
 app.options('*', (_, res) => res.sendStatus(200))

@@ -21,16 +21,18 @@ const setPermissionCache = async (permissions, role_id) => {
 }
 
 // 判断是否含有该权限
-const isGetterPermission = async (role_id, token) => {
+const isExistPermission = async (role_id, api_route_name) => {
   return await finishInWhichDB(REDIS_DB.permission, async () => {
     const allPermissions = await redisClient.get(role_id)
     return !_.isEmpty(
-      allPermissions.filter((permission) => !!permission.api_route_name)
+      allPermissions.filter(
+        (permission) => permission.api_route_name === api_route_name
+      )
     )
   })
 }
 
 module.exports = {
   setPermissionCache,
-  isGetterPermission,
+  isExistPermission,
 }
