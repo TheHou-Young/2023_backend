@@ -27,8 +27,8 @@ const createRefreshToken = () => {
   return uuidv4()
 }
 
-const verifyJwt = async (token) => {
-  const result = await jwt.verify(token, jwt_secret, null, null)
+const verifyJwt = (token) => {
+  const result = jwt.verify(token, jwt_secret, null, null)
   return result
 }
 

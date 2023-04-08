@@ -31,10 +31,10 @@ const permissionGetter = async (role_id) => {
 
 const auth = async (req, _, next) => {
   const token = req?.headers?.authorization
-  const { account, role_id } = await verifyJwt(token)
+  const { account, role_id } = verifyJwt(token)
   const object = await redisClient.get?.('*')
   const res = await permissionGetter(role_id)
-  console.log(object)
+  // console.log(object)
   next()
 }
 

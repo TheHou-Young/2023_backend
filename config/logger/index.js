@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const logger = require('morgan')
 const lodash = require('lodash')
+const { verifyJwt } = require('../../utils/jwt')
 
 const defaultPath = path.join(__dirname, '../../log')
 const defaultPathWithFile = `${defaultPath}/access.log`
@@ -15,15 +16,16 @@ const loggerConfig = (app) => {
     flags: 'a',
   })
   // 往日志添加用户信息
-  logger.token('id', (req) => req.headers.authorization)
+  logger.token('account', (req) => verifyJwt(req.headers.authorization).account)
   // 往日志添加时间
   logger.token('localDate', () => new Date().toLocaleString())
+  logger.token('params', (req) => JSON.stringify(req.body ?? req.params ?? {}))
   // 日志中间件的设置使用
   app.use(
     logger(
-      ':id :remote-addr - :remote-user [:localDate] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"',
+      ':account :remote-addr - :remote-user [:localDate] ":method :url HTTP/:http-version" :status :res[content-length] :params ":user-agent"',
       {
-        skip: (req) => lodash.isNil(req?.headers?.userId), // 空值就跳过
+        skip: (req) => lodash.isNil(req?.headers?.authorization), // 空值就跳过
         stream: accessLogStream,
       }
     )
