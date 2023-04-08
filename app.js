@@ -5,9 +5,9 @@ const logger = require('morgan')
 const { loadRouter } = require('./routes/index')
 const { loadEnv } = require('./config/env')
 const connectDB = require('./config/db')
-const loggerConfig = require('./config/logger')
 const { errorConfig, notExistConfig } = require('./middlewares/error')
 const httpHeader = require('./middlewares/httpHeader')
+const loggerMiddleware = require('./middlewares/logger')
 const translateNumber = require('./middlewares/translateNumber')
 const app = express()
 
@@ -24,8 +24,7 @@ app.use('*', httpHeader)
 app.options('*', (_, res) => res.sendStatus(200))
 
 app.use(translateNumber) // get请求参数预处理(string转化number)
-
-loggerConfig(app) // 日志打印
+app.use(loggerMiddleware) // 日志打印
 loadRouter(app) // 路由加载
 
 app.use(errorConfig) // 404
