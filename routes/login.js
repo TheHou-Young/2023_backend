@@ -6,4 +6,6 @@ const router = express.Router()
 
 router.post("/login", wrapper(loginController.login))
 
+router.post("/updateAccessToken", wrapper(loginController.updateAccessToken))
+
 module.exports = router

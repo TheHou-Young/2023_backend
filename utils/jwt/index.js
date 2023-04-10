@@ -34,5 +34,6 @@ const verifyJwt = (token) => {
 
 module.exports = {
   createJwt,
+  createAccessToken,
   verifyJwt,
 }
