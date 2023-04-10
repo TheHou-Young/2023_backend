@@ -19,6 +19,11 @@ class LoginController {
     res.set("Authorization", access_token)
     return { }
   }
+
+  logout = async (req) => {
+    const {refresh_token} = req.body
+    return await loginService.logout({refresh_token})
+  }
 }
 
 const loginController = new LoginController()

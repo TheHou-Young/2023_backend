@@ -50,6 +50,10 @@ class LoginService {
       return { access_token: new_access_token }
     }
   }
+
+  async logout ({refresh_token}){
+    return await redisClient.del(refresh_token)
+  }
 }
 
 const loginService = new LoginService()
