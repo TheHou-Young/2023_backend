@@ -1,4 +1,4 @@
-const loginService = require("../services/login")
+const loginService = require('../services/login')
 
 class LoginController {
   login = async (req, res) => {
@@ -8,21 +8,23 @@ class LoginController {
       password,
       role_id,
     })
-    res.set("Authorization", access_token)
+    res.set('Authorization', access_token)
     //res.cookie('refresh_token', refresh_token, { httpOnly: true })
     return { user, refresh_token }
   }
 
   updateAccessToken = async (req, res) => {
-    const {refresh_token} = req.body
-    const {access_token} = await loginService.updateAccessToken({refresh_token})
-    res.set("Authorization", access_token)
-    return { }
+    const { refresh_token } = req.body
+    const { access_token } = await loginService.updateAccessToken({
+      refresh_token,
+    })
+    res.set('Authorization', access_token)
+    return {}
   }
 
   logout = async (req) => {
-    const {refresh_token} = req.body
-    return await loginService.logout({refresh_token})
+    const { refresh_token } = req.body
+    return await loginService.logout({ refresh_token })
   }
 }
 

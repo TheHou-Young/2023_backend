@@ -1,4 +1,4 @@
-const permissionService = require("../services/permission")
+const permissionService = require('../services/permission')
 
 class PermissionController {
   createPermission = async (req) => {

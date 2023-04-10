@@ -37,21 +37,21 @@ class LoginService {
     }
   }
 
-  async updateAccessToken ({refresh_token}){
+  async updateAccessToken({ refresh_token }) {
     const data = await redisClient.get(refresh_token)
-    if(_.isEmpty(data))throw new Error('该账号未登录，请登录')
+    if (_.isEmpty(data)) throw new Error('该账号未登录，请登录')
     const { account, role_id, expires: refresh_token_maxage } = JSON.parse(data)
     const nowTime = new Date()
     const expireTime = new Date(refresh_token_maxage)
-    if(nowTime > expireTime){
+    if (nowTime > expireTime) {
       throw new Error('登录已经过期，请重新登录')
-    }else{
+    } else {
       const new_access_token = createAccessToken({ account, role_id })
       return { access_token: new_access_token }
     }
   }
 
-  async logout ({refresh_token}){
+  async logout({ refresh_token }) {
     return await redisClient.del(refresh_token)
   }
 }
