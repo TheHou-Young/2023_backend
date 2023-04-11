@@ -10,10 +10,12 @@ const formStringToNumber = (value) => {
   }
 }
 
+const blackList = ['account'] // key值黑名单
 // 预处理，将get值里的字符数字转化成Number
 const translateNumber = (req, _, next) => {
   const { query } = req
   for (const key in query) {
+    if (blackList.includes(key)) continue // account可以转化成数字，但是我们期望不要转化成数字
     formStringToNumber(query?.[key])
     // 数组传值整理
     if (query?.[key] instanceof Array) {

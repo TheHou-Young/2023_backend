@@ -9,10 +9,13 @@ const { errorConfig, notExistConfig } = require('./middlewares/error')
 const httpHeader = require('./middlewares/httpHeader')
 const loggerMiddleware = require('./middlewares/logger')
 const translateNumber = require('./middlewares/translateNumber')
+const { loadScript } = require('./script')
+
 const app = express()
 
 loadEnv() // 加载env环境
 connectDB() // 连接数据库
+loadScript()
 
 app.use(logger('dev'))
 app.use(express.json())
