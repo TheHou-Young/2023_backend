@@ -5,15 +5,16 @@ const auth = require('../middlewares/auth')
 
 const router = express.Router()
 
-router.get(
-  '/role/list',
-  auth('/role/list'),
-  wrapper(roleController.getRoleList)
-)
-//TODO 创建用户请求应该时post
-router.post('/role/create', wrapper(roleController.createRole))
-router.put('/role/update', wrapper(roleController.updateRole))
-router.get('/role/get', wrapper(roleController.getRole))
-router.get('/role/delete', wrapper(roleController.deleteRole))
+const API_ROUTE = {
+  list: '/role/list',
+  create: '/role/create',
+  update: '/role/update',
+  delete: '/role/delete',
+}
+
+router.get(API_ROUTE.list, auth(API_ROUTE.list), wrapper(roleController.getRoleList))
+router.post(API_ROUTE.create, auth(API_ROUTE.create), wrapper(roleController.createRole))
+router.put(API_ROUTE.update, auth(API_ROUTE.update), wrapper(roleController.updateRole))
+router.get(API_ROUTE.delete, auth(API_ROUTE.delete), wrapper(roleController.deleteRole))
 
 module.exports = router

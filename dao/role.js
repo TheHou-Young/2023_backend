@@ -10,11 +10,7 @@ class RoleDao {
   // 删除角色
   // TODO——删除角色 并且删除使用了该角色的用户
   async deleteRole(role_id, session) {
-    return await roleModel.updateOne(
-      { _id: role_id },
-      { delete_status: 1 },
-      { session }
-    )
+    return await roleModel.updateOne({ _id: role_id }, { delete_status: 1 }, { session })
   }
 
   // 修改角色

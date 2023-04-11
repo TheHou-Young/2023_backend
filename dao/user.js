@@ -13,10 +13,7 @@ class UserDao {
 
   // 根据手机号(账户)查询个人信息
   async findUserByAccount(account) {
-    return await userModel.findOne(
-      { account, delete_status: 0 },
-      { password: 0, delete_status: 0 }
-    )
+    return await userModel.findOne({ account, delete_status: 0 }, { password: 0, delete_status: 0 })
   }
 
   // 创建账户
@@ -54,10 +51,7 @@ class UserDao {
   }
 
   // 更新账户信息
-  async updateUser(
-    { account, user_name, password, new_account, role_id },
-    session
-  ) {
+  async updateUser({ account, user_name, password, new_account, role_id }, session) {
     return await userModel.findOneAndUpdate(
       { account },
       {

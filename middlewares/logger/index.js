@@ -21,12 +21,9 @@ logger.token('localDate', () => new Date().toLocaleString())
 logger.token('params', (req) => JSON.stringify(req.body ?? req.params ?? {}))
 
 // 日志中间件的设置使用
-const loggerMiddleware = logger(
-  ':account :remote-addr - :remote-user [:localDate] ":method :url HTTP/:http-version" :status :res[content-length] :params ":user-agent"',
-  {
-    skip: (req) => lodash.isNil(req?.headers?.authorization), // 空值就跳过
-    stream: accessLogStream,
-  }
-)
+const loggerMiddleware = logger(':account :remote-addr - :remote-user [:localDate] ":method :url HTTP/:http-version" :status :res[content-length] :params ":user-agent"', {
+  skip: (req) => lodash.isNil(req?.headers?.authorization), // 空值就跳过
+  stream: accessLogStream,
+})
 
 module.exports = loggerMiddleware

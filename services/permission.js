@@ -1,5 +1,5 @@
-const permissionDao = require("../dao/permission")
-const _ = require("lodash")
+const permissionDao = require('../dao/permission')
+const _ = require('lodash')
 
 class PermissionService {
   /**
@@ -8,11 +8,9 @@ class PermissionService {
    * @returns
    */
   async createPermission(permissionInfo) {
-    const result = await permissionDao.findPermissionByname(
-      permissionInfo.permission_name
-    )
+    const result = await permissionDao.findPermissionByname(permissionInfo.permission_name)
     if (!_.isEmpty(result)) {
-      throw new Error("该许可已经存在")
+      throw new Error('该许可已经存在')
     } else {
       return await permissionDao.createPermission(permissionInfo)
     }
