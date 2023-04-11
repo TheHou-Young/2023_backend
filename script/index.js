@@ -4,16 +4,41 @@ const userModel = require('../models/user')
 const roleModel = require('../models/role')
 const permissionModel = require('../models/permission')
 const { redisClient } = require('../config/db/redis')
+const { finishInWhichDB } = require('../redis/permission')
+const { REDIS_DB } = require('../public/constants')
 const data = require('./data')
 
 const loadScript = async () => {
   const userCount = await userModel.countDocuments()
   const roleCount = await roleModel.countDocuments()
   const permissionCount = await permissionModel.countDocuments()
-  const redisCount =
-    (await redisClient.mGet(Object.values(data.DEFAULT_ID))).filter(
-      (value) => !_.isNil(value)
-    )?.length ?? 0
+  await finishInWhichDB(REDIS_DB.permission, async (redisClient) => {
+    const allKeys = await redisClient.keys('*')
+    if (!allKeys.length) {
+      let params = null
+      if (!permissionCount) params = data.REDIS_KEY_AND_VALUE
+      else {
+        const result = await roleModel.aggregate([
+          {
+            $lookup: {
+              from: 'permissions',
+              localField: 'permission_ids',
+              foreignField: '_id',
+              as: 'permissions',
+            },
+          },
+        ])
+        params = result.reduce((res, item) => {
+          return {
+            ...res,
+            [item._id?.toString()]: JSON.stringify(item.permissions),
+          }
+        }, {})
+      }
+      await redisClient.mSet(params)
+    }
+  })
+
   // 如果是空的，就加载默认数据
   switch (true) {
     case !userCount:
@@ -22,8 +47,6 @@ const loadScript = async () => {
       await roleModel.insertMany(data.DEFAULT_ROLES)
     case !permissionCount:
       await permissionModel.insertMany(data.DEFAULT_PERMISSIONS)
-    case !redisCount:
-      await redisClient.mSet(data.REDIS_KEY_AND_VALUE)
     default:
       console.log('默认数据加载完成')
   }

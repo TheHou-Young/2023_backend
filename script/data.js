@@ -1,14 +1,14 @@
 const { toObjectId } = require('../utils/map')
 
 const userManagementId = toObjectId()
-const userListId = toObjectId()
-const roleListId = toObjectId()
-const createUserId = toObjectId()
-const updateUserId = toObjectId()
-const deleteUserId = toObjectId()
-const createRoleId = toObjectId()
-const updateRoleId = toObjectId()
-const deleteRoleId = toObjectId()
+const userListId = toObjectId().toString()
+const roleListId = toObjectId().toString()
+const createUserId = toObjectId().toString()
+const updateUserId = toObjectId().toString()
+const deleteUserId = toObjectId().toString()
+const createRoleId = toObjectId().toString()
+const updateRoleId = toObjectId().toString()
+const deleteRoleId = toObjectId().toString()
 const DEFAULT_PERMISSIONS = [
   {
     permission_name: '用户管理',
@@ -16,107 +16,107 @@ const DEFAULT_PERMISSIONS = [
     permission_pid: null,
     type: 1,
     api_route_name: '/user',
-    _id: userManagementId,
+    _id: toObjectId(userManagementId),
   },
   {
     permission_name: '用户列表',
     description: '管理员端用户控制',
-    permission_pid: userManagementId,
+    permission_pid: toObjectId(userManagementId),
     type: 1,
     api_route_name: '/user/list',
-    _id: userListId,
+    _id: toObjectId(userListId),
   },
   {
     permission_name: '角色管理',
     description: '管理员端页面管制',
-    permission_pid: userManagementId,
+    permission_pid: toObjectId(userManagementId),
     type: 1,
     api_route_name: '/role/list',
-    _id: roleListId,
+    _id: toObjectId(roleListId),
   },
   {
     permission_name: '创建用户',
     description: '用户列表创建用户用',
-    permission_pid: userListId,
+    permission_pid: toObjectId(userListId),
     type: 2,
     api_route_name: '/user/create',
-    _id: createUserId,
+    _id: toObjectId(createUserId),
   },
   {
     permission_name: '删除用户',
     description: '用户列表删除用户用',
-    permission_pid: userListId,
+    permission_pid: toObjectId(userListId),
     type: 2,
     api_route_name: '/user/delete',
-    _id: deleteUserId,
+    _id: toObjectId(deleteUserId),
   },
   {
     permission_name: '修改用户',
     description: '用户列表修改用户用',
-    permission_pid: userListId,
+    permission_pid: toObjectId(userListId),
     type: 2,
     api_route_name: '/user/update',
-    _id: updateUserId,
+    _id: toObjectId(updateUserId),
   },
   {
     permission_name: '创建角色',
     description: '用户列表创建角色用',
-    permission_pid: roleListId,
+    permission_pid: toObjectId(roleListId),
     type: 2,
     api_route_name: '/role/create',
-    _id: createRoleId,
+    _id: toObjectId(createRoleId),
   },
   {
     permission_name: '删除角色',
     description: '用户列表删除角色用',
-    permission_pid: roleListId,
+    permission_pid: toObjectId(roleListId),
     type: 2,
     api_route_name: '/role/delete',
-    _id: deleteRoleId,
+    _id: toObjectId(deleteRoleId),
   },
   {
     permission_name: '修改角色',
     description: '用户列表修改角色用',
-    permission_pid: roleListId,
+    permission_pid: toObjectId(roleListId),
     type: 2,
     api_route_name: '/role/update',
-    _id: updateRoleId,
+    _id: toObjectId(updateRoleId),
   },
 ]
 
-const studentId = toObjectId()
-const expertId = toObjectId()
-const adminId = toObjectId()
+const studentId = toObjectId().toString()
+const expertId = toObjectId().toString()
+const adminId = toObjectId().toString()
 const DEFAULT_ID = {
-  studentId: studentId.toString(),
-  expertId: expertId.toString(),
-  adminId: adminId.toString(),
+  studentId,
+  expertId,
+  adminId,
 }
 const DEFAULT_ROLES = [
   {
     role_name: '学生',
     permission_ids: [],
-    _id: studentId,
+    _id: toObjectId(studentId),
   },
   {
     role_name: '专家',
     permission_ids: [],
-    _id: expertId,
+    _id: toObjectId(expertId),
   },
   {
     role_name: '管理员',
     permission_ids: [
-      userManagementId,
-      userListId,
-      roleListId,
-      createUserId,
-      updateUserId,
-      deleteUserId,
-      createRoleId,
-      updateRoleId,
-      deleteRoleId,
+      toObjectId(userManagementId),
+      toObjectId(userListId),
+      toObjectId(roleListId),
+      toObjectId(createUserId),
+      toObjectId(updateUserId),
+      toObjectId(deleteUserId),
+      toObjectId(createRoleId),
+      toObjectId(updateRoleId),
+      toObjectId(deleteRoleId),
     ],
-    _id: adminId,
+    _id: toObjectId(adminId),
   },
 ]
 
@@ -125,13 +125,13 @@ const DEFAULT_USERS = [
     user_name: '林凯迪',
     password: 'qwer1234',
     account: '12345678900',
-    role_id: adminId,
+    role_id: toObjectId(adminId),
   },
   {
     user_name: '侯斯扬',
     password: 'qwer1234',
     account: '12345678901',
-    role_id: adminId,
+    role_id: toObjectId(adminId),
   },
 ]
 

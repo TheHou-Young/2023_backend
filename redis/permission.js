@@ -33,6 +33,7 @@ const isExistPermission = async (role_id, api_route_name) => {
 }
 
 module.exports = {
+  finishInWhichDB,
   setPermissionCache,
   isExistPermission,
 }
