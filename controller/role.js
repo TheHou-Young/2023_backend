@@ -39,6 +39,10 @@ class RoleController {
     const { role_id } = req.query
     return await roleService.deleteRole(role_id)
   }
+
+  getRoleLabelAndValue = async (_) => {
+    return await roleService.getRoleLabelAndValue()
+  }
 }
 
 const roleController = new RoleController()

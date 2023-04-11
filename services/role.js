@@ -61,6 +61,8 @@ class RoleService {
   }
 
   getRoleList = async ({ role_name, permission_ids, size, page }) => await roleDao.getRoleList({ role_name, permission_ids, size, page })
+
+  getRoleLabelAndValue = async () => await roleDao.getRoleLabelAndValue()
 }
 
 const roleService = new RoleService()

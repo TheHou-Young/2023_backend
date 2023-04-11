@@ -76,6 +76,16 @@ class RoleDao {
   async getDefaultRole() {
     return await roleModel.findOne()
   }
+
+  async getRoleLabelAndValue() {
+    return await roleModel.find(
+      {},
+      {
+        _id: 1,
+        role_name: 1,
+      }
+    )
+  }
 }
 
 const roleDao = new RoleDao()
