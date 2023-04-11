@@ -1,19 +1,36 @@
 const express = require('express')
-const expressConfig = require('./config/express')
+const path = require('path')
+const cookieParser = require('cookie-parser')
+const logger = require('morgan')
 const { loadRouter } = require('./routes/index')
 const { loadEnv } = require('./config/env')
 const connectDB = require('./config/db')
-const { httpHeaderConfig, httpErrorConfig } = require('./config/http')
-const loggerConfig = require('./config/logger')
+const { errorConfig, notExistConfig } = require('./middlewares/error')
+const httpHeader = require('./middlewares/httpHeader')
+const loggerMiddleware = require('./middlewares/logger')
+const translateNumber = require('./middlewares/translateNumber')
+const { loadScript } = require('./script')
 
 const app = express()
 
 loadEnv() // 加载env环境
 connectDB() // 连接数据库
-expressConfig(app) // express一些前置处理
-httpHeaderConfig(app) // 前置处理
-loggerConfig(app) // 日志打印
+loadScript()
+
+app.use(logger('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
+app.use(express.static(path.join(__dirname, './public')))
+
+app.use('*', httpHeader)
+app.options('*', (_, res) => res.sendStatus(200))
+
+app.use(translateNumber) // get请求参数预处理(string转化number)
+app.use(loggerMiddleware) // 日志打印
 loadRouter(app) // 路由加载
-httpErrorConfig(app) // 错误处理
+
+app.use(errorConfig) // 404
+app.use(notExistConfig) // 500
 
 module.exports = app
