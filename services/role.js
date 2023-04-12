@@ -62,7 +62,10 @@ class RoleService {
 
   getRoleList = async ({ role_name, permission_ids, size, page }) => await roleDao.getRoleList({ role_name, permission_ids, size, page })
 
-  getRoleLabelAndValue = async () => await roleDao.getRoleLabelAndValue()
+  getRoleLabelAndValue = async () => {
+    const daoData = await roleDao.getRoleLabelAndValue()
+    return daoData.map(({ role_name, _id }) => ({ label: role_name, value: _id.toString() }))
+  }
 }
 
 const roleService = new RoleService()

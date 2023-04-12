@@ -17,6 +17,6 @@ router.post(API_ROUTE.create, auth(API_ROUTE.create), wrapper(roleController.cre
 router.put(API_ROUTE.update, auth(API_ROUTE.update), wrapper(roleController.updateRole))
 router.get(API_ROUTE.delete, auth(API_ROUTE.delete), wrapper(roleController.deleteRole))
 
-router.get('/role/options', wrap(roleController.getRoleLabelAndValue))
+router.get('/role/options', wrapper(roleController.getRoleLabelAndValue))
 
 module.exports = router
