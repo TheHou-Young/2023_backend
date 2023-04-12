@@ -18,7 +18,7 @@ const accessLogStream = fs.createWriteStream(defaultPathWithFile, {
 logger.token('account', (req) => verifyJwt(req.headers.authorization).account)
 // 往日志添加时间
 logger.token('localDate', () => new Date().toLocaleString())
-logger.token('params', (req) => JSON.stringify(req.body ?? req.params ?? {}))
+logger.token('params', (req) => JSON.stringify(!lodash.isEmpty(req.body) ? req.body : !lodash.isEmpty(req.params) ? req.params : {}))
 
 // 日志中间件的设置使用
 const loggerMiddleware = logger(':account :remote-addr - :remote-user [:localDate] ":method :url HTTP/:http-version" :status :res[content-length] :params ":user-agent"', {
