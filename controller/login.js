@@ -8,7 +8,7 @@ class LoginController {
       password,
       role_id,
     })
-    res.set('Authorization', access_token)
+    //res.set('Authorization', access_token)
     //res.cookie('refresh_token', refresh_token, { httpOnly: true })
     return { user, refresh_token, access_token }
   }
@@ -18,8 +18,8 @@ class LoginController {
     const { access_token } = await loginService.updateAccessToken({
       refresh_token,
     })
-    res.set('Authorization', access_token)
-    return {}
+    //res.set('Authorization', access_token)
+    return { access_token }
   }
 
   logout = async (req) => {
