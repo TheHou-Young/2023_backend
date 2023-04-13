@@ -18,11 +18,7 @@ const pagination = async ({ model, matchPip, listPip, options = DEFAULT }) => {
     },
     {
       $facet: {
-        list: [
-          ...listPip,
-          { $skip: (page - DEFAULT.page) * size },
-          { $limit: size },
-        ],
+        list: [...listPip, { $skip: (page - DEFAULT.page) * size }, { $limit: size }],
         count: [
           {
             $count: 'count',
@@ -40,7 +36,8 @@ const pagination = async ({ model, matchPip, listPip, options = DEFAULT }) => {
       },
     },
   ])
-  return data
+  const { list = [], count = 0 } = data
+  return { list, count }
 }
 
 module.exports = pagination
