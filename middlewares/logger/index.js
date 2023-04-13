@@ -15,7 +15,13 @@ const accessLogStream = fs.createWriteStream(defaultPathWithFile, {
   flags: 'a',
 })
 // 往日志添加用户信息
-logger.token('account', (req) => verifyJwt(req.headers.authorization)?.account ?? '-')
+logger.token('account', (req) => {
+  try {
+    return verifyJwt(req.headers.authorization)?.account ?? '-'
+  } catch (error) {
+    return '-'
+  }
+})
 // 往日志添加时间
 logger.token('localDate', () => new Date().toLocaleString())
 logger.token('params', (req) => JSON.stringify(!lodash.isEmpty(req.body) ? req.body : !lodash.isEmpty(req.params) ? req.params : {}))
