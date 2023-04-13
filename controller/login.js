@@ -10,7 +10,7 @@ class LoginController {
     })
     res.set('Authorization', access_token)
     //res.cookie('refresh_token', refresh_token, { httpOnly: true })
-    return { user, refresh_token }
+    return { user, refresh_token, access_token }
   }
 
   updateAccessToken = async (req, res) => {
