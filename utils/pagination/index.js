@@ -36,7 +36,7 @@ const pagination = async ({ model, matchPip, listPip, options = DEFAULT }) => {
       },
     },
   ])
-  const { list = [], count = 0 } = data
+  const { list = [], count = 0 } = data ?? {}
   return { list, count }
 }
 
