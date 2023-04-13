@@ -4,9 +4,9 @@ const DEFAULT = {
   size: 10,
 }
 
-const formStringToNumber = (value) => {
-  if (typeof value === 'string' && !lodash.isNaN(Number(value))) {
-    value = Number(value)
+const formStringToNumber = (object, key) => {
+  if (typeof object[key] === 'string' && !lodash.isNaN(Number(object[key]))) {
+    object[key] = Number(object[key])
   }
 }
 
@@ -16,11 +16,11 @@ const translateNumber = (req, _, next) => {
   const { query } = req
   for (const key in query) {
     if (blackList.includes(key)) continue // account可以转化成数字，但是我们期望不要转化成数字
-    formStringToNumber(query?.[key])
+    formStringToNumber(query, key)
     // 数组传值整理
     if (query?.[key] instanceof Array) {
       for (const objKey in query[key]) {
-        formStringToNumber(query[key][objKey])
+        formStringToNumber(query[key], objKey)
       }
     }
   }

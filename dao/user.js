@@ -1,5 +1,6 @@
 const userModel = require('../models/user')
 const pagination = require('../utils/pagination')
+const lodash = require('lodash')
 
 class UserDao {
   async findUserWithRoleId({ account, password, role_id }) {
@@ -87,7 +88,7 @@ class UserDao {
     return await pagination({
       model: userModel,
       matchPip: {
-        activation_status: { $eq: activation_status },
+        activation_status: { $exists: activation_status },
         delete_status: { $eq: delete_status },
         account: { $regex: account },
       },
