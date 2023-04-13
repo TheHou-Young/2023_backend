@@ -28,6 +28,7 @@ const createRefreshToken = () => {
 }
 
 const verifyJwt = (token) => {
+  if (!token) return undefined // 没有token的请求也需要额外处理
   const result = jwt.verify(token, jwt_secret, null, null)
   return result
 }
