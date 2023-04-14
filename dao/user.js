@@ -85,13 +85,15 @@ class UserDao {
     size,
     page,
   }) {
+    const matchPip = {
+      delete_status: { $eq: delete_status },
+      account: { $regex: account },
+    }
+    if (!lodash.isNil(activation_status)) matchPip.activation_status = activation_status
+
     return await pagination({
       model: userModel,
-      matchPip: {
-        activation_status: { $exists: activation_status },
-        delete_status: { $eq: delete_status },
-        account: { $regex: account },
-      },
+      matchPip,
       listPip: [
         {
           $lookup: {

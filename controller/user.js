@@ -2,13 +2,7 @@ const userService = require('../services/user')
 
 class UserController {
   getUserList = async (req) => {
-    const {
-      role_name = '',
-      activation_status = null,
-      account = '',
-      size,
-      page,
-    } = req.query
+    const { role_name = '', activation_status, account = '', size, page } = req.query
     return await userService.getUserList({
       role_name,
       activation_status,
@@ -29,13 +23,7 @@ class UserController {
   }
 
   updateUser = async (req) => {
-    const {
-      account,
-      user_name = null,
-      password = null,
-      new_account,
-      role_id = null,
-    } = req.body
+    const { account, user_name = null, password = null, new_account, role_id = null } = req.body
     return await userService.updateUser({
       account,
       user_name,
