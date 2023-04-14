@@ -1,4 +1,3 @@
-const { redisClient } = require('../../config/db/redis')
 const { verifyJwt } = require('../../utils/jwt')
 const { REDIS_DB } = require('../../public/constants')
 const { finishInWhichDB } = require('../../redis/permission') // 这个函数后续再整理到utils

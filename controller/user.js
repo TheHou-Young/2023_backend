@@ -34,8 +34,9 @@ class UserController {
   }
 
   getUserPermissionList = async (req) => {
-    const { account } = req.query
-    return await userService.findUserPermissionList(account)
+    const { my_account } = req.query
+    console.log(my_account)
+    return await userService.findUserPermissionList(my_account)
   }
 }
 

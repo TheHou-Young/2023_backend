@@ -10,7 +10,7 @@ const formStringToNumber = (object, key) => {
   }
 }
 
-const blackList = ['account'] // key值黑名单
+const blackList = ['account', 'my_account'] // key值黑名单
 // 预处理，将get值里的字符数字转化成Number
 const translateNumber = (req, _, next) => {
   const { query } = req
