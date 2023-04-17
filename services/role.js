@@ -1,5 +1,5 @@
-const roleDao = require("../dao/role")
-const _ = require("lodash")
+const roleDao = require('../dao/role')
+const _ = require('lodash')
 
 class RoleService {
   /**
@@ -10,7 +10,7 @@ class RoleService {
   async createRole({ role_name, permission_ids }) {
     let is_exit = await roleDao.findRoleByName(role_name)
     if (!_.isEmpty(is_exit)) {
-      throw new Error("已有该名称的角色，请更换名称")
+      throw new Error('已有该名称的角色，请更换名称')
     } else {
       return await roleDao.createRole({ role_name, permission_ids })
     }
@@ -24,10 +24,10 @@ class RoleService {
   async deleteRole(role_id) {
     const result = await roleDao.findRoleById(role_id)
     if (_.isEmpty(result)) {
-      throw new Error("没有该角色")
+      throw new Error('没有该角色')
     }
     if (result.delete_status) {
-      throw new Error("该角色已经被删除")
+      throw new Error('该角色已经被删除')
     } else {
       return await roleDao.deleteRole(role_id)
     }
@@ -60,8 +60,12 @@ class RoleService {
     return await roleDao.findRolePermissionInfo(role_id)
   }
 
-  getRoleList = async ({ role_name, permission_ids, size, page }) =>
-    await roleDao.getRoleList({ role_name, permission_ids, size, page })
+  getRoleList = async ({ role_name, permission_ids, size, page }) => await roleDao.getRoleList({ role_name, permission_ids, size, page })
+
+  getRoleLabelAndValue = async () => {
+    const daoData = await roleDao.getRoleLabelAndValue()
+    return daoData.map(({ role_name, _id }) => ({ label: role_name, value: _id.toString() }))
+  }
 }
 
 const roleService = new RoleService()

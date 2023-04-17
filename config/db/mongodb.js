@@ -7,7 +7,7 @@ const connectMongoDB = (mongoose = _) => {
   })
 
   mongoose.connection.on('connected', () => {
-    console.log('Connected to mongoDB')
+    console.log('MongoDB 连接成功')
   })
 
   mongoose.connection.on('error', () => {

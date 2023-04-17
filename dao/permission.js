@@ -1,4 +1,4 @@
-const permissionModel = require("../models/permission")
+const permissionModel = require('../models/permission')
 
 class PermissionDao {
   //添加许可
@@ -21,10 +21,9 @@ class PermissionDao {
   //查询所有许可
   //TODO——不需要分页
   async findAllPermission() {
-    return await permissionModel
-      .find()
-      // .skip((page - 1) * size)
-      // .limit(size)
+    return await permissionModel.find()
+    // .skip((page - 1) * size)
+    // .limit(size)
   }
 
   //查询多个许可

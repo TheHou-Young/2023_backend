@@ -15,7 +15,18 @@ const permissionSchema = new mongoose.Schema(
     //权限的父id
     permission_pid: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'permission',
+      required: false,
+    },
+    //页面or按钮
+    type: {
+      type: Number,
+      enum: [1, 2], // 1-页面，2-按钮
+      required: true,
+      default: 1,
+    },
+    //调用后端接口鉴权使用
+    api_route_name: {
+      type: String,
     },
     //数据是否删除
     delete_status: {
