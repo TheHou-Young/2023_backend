@@ -16,7 +16,7 @@ class OK extends Result {
 class Fail extends Result {
   constructor({ code, msg, data }) {
     super({ code, msg, data })
-    this.code = 400
+    this.code = code ?? 400
   }
 }
 
