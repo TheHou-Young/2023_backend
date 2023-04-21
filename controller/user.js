@@ -37,6 +37,11 @@ class UserController {
     const { my_account } = req.query
     return await userService.findUserPermissionList(my_account)
   }
+
+  setActivationStatus = async (req) => {
+    const { my_account } = req.body
+    return await userService.setActivationStatus(my_account)
+  }
 }
 
 const userController = new UserController()

@@ -17,6 +17,7 @@ router.post(API_ROUTE.create, auth(API_ROUTE.create), wrapper(userController.cre
 router.delete(API_ROUTE.delete, auth(API_ROUTE.delete), wrapper(userController.deleteUser))
 router.patch(API_ROUTE.update, auth(API_ROUTE.update), wrapper(userController.updateUser))
 
-router.get('/user/permissionList', wrapper(userController.getUserPermissionList))
+router.get('/user/permission-list', wrapper(userController.getUserPermissionList))
+router.post('/user/set-activation', wrapper(userController.setActivationStatus))
 
 module.exports = router
