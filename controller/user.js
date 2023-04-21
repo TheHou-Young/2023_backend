@@ -2,9 +2,9 @@ const userService = require('../services/user')
 
 class UserController {
   getUserList = async (req) => {
-    const { role_name = '', activation_status, account = '', size, page } = req.query
+    const { role_id = '', activation_status, account = '', size, page } = req.query
     return await userService.getUserList({
-      role_name,
+      role_id,
       activation_status,
       account,
       size,

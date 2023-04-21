@@ -1,5 +1,6 @@
 const userModel = require('../models/user')
 const pagination = require('../utils/pagination')
+const { toObjectId } = require('../utils/map')
 const lodash = require('lodash')
 
 class UserDao {
@@ -80,7 +81,7 @@ class UserDao {
     account,
     department, // 暂不做数据过滤
     activation_status,
-    role_name,
+    role_id,
     delete_status = 0,
     size,
     page,
@@ -90,6 +91,7 @@ class UserDao {
       account: { $regex: account },
     }
     if (!lodash.isNil(activation_status)) matchPip.activation_status = activation_status
+    if (!lodash.isEmpty(role_id)) matchPip.role_id = { $eq: toObjectId(role_id) }
 
     return await pagination({
       model: userModel,
@@ -101,11 +103,6 @@ class UserDao {
             localField: 'role_id',
             foreignField: '_id',
             as: 'role',
-          },
-        },
-        {
-          $match: {
-            'role.role_name': { $regex: role_name },
           },
         },
       ],
