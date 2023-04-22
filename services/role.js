@@ -60,7 +60,7 @@ class RoleService {
     return await roleDao.findRolePermissionInfo(role_id)
   }
 
-  getRoleList = async ({ role_name, permission_ids, size, page }) => await roleDao.getRoleList({ role_name, permission_ids, size, page })
+  getRoleList = async ({ role_id, permission_ids, size, page }) => await roleDao.getRoleList({ role_id, permission_ids, size, page })
 
   getRoleLabelAndValue = async () => {
     const daoData = await roleDao.getRoleLabelAndValue()

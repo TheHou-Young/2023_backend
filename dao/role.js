@@ -1,5 +1,7 @@
 const roleModel = require('../models/role')
 const pagination = require('../utils/pagination')
+const { toObjectId } = require('../utils/map')
+const lodash = require('lodash')
 
 class RoleDao {
   // 添加角色
@@ -44,21 +46,15 @@ class RoleDao {
   }
 
   // 获取角色列表
-  async getRoleList({ role_name = '', permission_ids = [], size, page }) {
+  async getRoleList({ role_id = '', permission_ids = [], size, page }) {
+    const matchPip = {}
+    if (!lodash.isEmpty(role_id)) matchPip.role_id = toObjectId(role_id)
+    if (!lodash.isEmpty(permission_ids)) matchPip.permission_ids = { $in: permission_ids?.map(toObjectId) }
+
     const findRolesWithPermission = pagination({
       model: roleModel,
-      matchPip: {
-        permission_ids: {
-          $exists: permission_ids,
-        },
-        role_name: {
-          $regex: role_name,
-        },
-      },
+      matchPip,
       listPip: [
-        {
-          $unwind: '$permission_ids',
-        },
         {
           $lookup: {
             from: 'permissions',

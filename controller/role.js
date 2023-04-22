@@ -4,9 +4,9 @@ const { toObjectId } = require('../utils/map')
 // TODO: 数据合法性校验应该在controller做过滤
 class RoleController {
   getRoleList = async (req) => {
-    const { role_name = '', permission_ids = null, size, page } = req.query
+    const { role_id = '', permission_ids = [], size, page } = req.query
     return await roleService.getRoleList({
-      role_name,
+      role_id,
       permission_ids,
       size,
       page,
@@ -36,7 +36,7 @@ class RoleController {
   }
 
   deleteRole = async (req) => {
-    const { role_id } = req.query
+    const { role_id } = req.body
     return await roleService.deleteRole(role_id)
   }
 
