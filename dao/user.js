@@ -141,6 +141,10 @@ class UserDao {
     const [result] = await userModel.aggregate(aggregateQuery)
     return result.permissions
   }
+
+  addVPrice = async (account, v_price, session) => {
+    
+  }
 }
 
 const userDao = new UserDao()

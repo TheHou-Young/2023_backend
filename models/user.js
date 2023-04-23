@@ -35,6 +35,12 @@ const userSchema = new mongoose.Schema(
       enum: [0, 1],
       default: 1,
     },
+    // 用户激励机制等效奖励
+    v_price: {
+      type: Number,
+      require: true,
+      default: 0,
+    },
     //数据是否删除
     delete_status: {
       type: Number,

@@ -39,8 +39,8 @@ class UserController {
   }
 
   setActivationStatus = async (req) => {
-    const { my_account } = req.body
-    return await userService.setActivationStatus(my_account)
+    const { account } = req.body
+    return await userService.setActivationStatus(account)
   }
 }
 
