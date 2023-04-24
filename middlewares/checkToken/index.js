@@ -8,6 +8,7 @@ const checkToken = (req, res, next) => {
   const token = req?.headers?.authorization
   if (!token) {
     // 没有token，可能是不需要鉴权的接口进行请求
+    // TODO——为不需要鉴权的接口设置白名单
     next()
     return
   }

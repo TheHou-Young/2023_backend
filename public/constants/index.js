@@ -13,8 +13,16 @@ const REDIS_DB = {
   permission: 1,
 }
 
+const CONSUL = {
+  HOST: '127.0.0.1',
+  HOST_PORT: 8500,
+  SERVICE_NAME: 'user_manage',
+  SERVICE_PORT: 3000,
+}
+
 module.exports = {
   BACKEND_CODE,
   MESSAGE,
   REDIS_DB,
+  CONSUL,
 }
