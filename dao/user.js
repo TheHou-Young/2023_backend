@@ -142,8 +142,16 @@ class UserDao {
     return result.permissions
   }
 
-  addVPrice = async (account, v_price, session) => {
-    
+  // 添加虚拟奖励
+  addVPrice = async ({ account, role_id, v_price }, session) => {
+    const result = await userModel.findOneAndUpdate(
+      { account, role_id },
+      {
+        v_price: { $inc: { v_price } },
+      },
+      { session }
+    )
+    return result
   }
 }
 

@@ -7,6 +7,11 @@ const rewardRecordSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    role_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'role',
+      required: true,
+    },
     // 签到时间(跟创建时间基本一致)
     check_in_time: {
       type: Number,
