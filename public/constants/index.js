@@ -13,6 +13,7 @@ const REDIS_DB = {
   permission: 1,
 }
 
+// consul 客户端以及本服务的相关配置
 const CONSUL = {
   HOST: '127.0.0.1',
   HOST_PORT: 8500,

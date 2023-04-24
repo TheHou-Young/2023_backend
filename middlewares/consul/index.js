@@ -1,28 +1,32 @@
-// 完成consul的相关配置
+// 完成consul实例的初始化
 const Consul = require('consul')
+const { CONSUL } = require('../../public/constants/index')
+const { getIPAddress } = require('../../utils/ip/index')
 
 var consulInstance = null
 
 class ConsulConfig {
   constructor() {
-    const serviceName = 'user_manage'
-    const PORT = 3000
+    const SERVICE_NAME = CONSUL.SERVICE_NAME
+    const PORT = CONSUL.SERVICE_PORT
+    const ip = getIPAddress()
+    const url = 'http://' + ip + ':' + PORT + '/api/health'
 
     // 初始化 consul
     this.consul = new Consul({
-      host: '127.0.0.1',
-      port: 8500,
+      host: CONSUL.HOST,
+      port: CONSUL.HOST_PORT,
       promisify: true,
     })
 
     // 服务注册与健康检查配置
     this.consul.agent.service.register(
       {
-        name: serviceName,
-        address: '127.0.0.1',
+        name: SERVICE_NAME,
+        address: ip,
         port: PORT,
         check: {
-          http: 'http://127.0.0.1:3000/api/health',
+          http: url,
           interval: '10s',
           timeout: '5s',
         },
@@ -32,7 +36,7 @@ class ConsulConfig {
           console.error(err)
           throw err
         }
-        console.log(serviceName + ' 注册成功！')
+        // console.log(serviceName + ' 注册成功！')
       }
     )
   }
@@ -40,7 +44,7 @@ class ConsulConfig {
   // 获取目标服务实例的地址
   async getServiceURL(serviceName) {
     const instances = await this.consul.catalog.service.nodes(serviceName)
-    //console.log(instances)
+    // console.log(instances)
     const urls = instances.map((instance) => `http://${instance.ServiceAddress}:${instance.ServicePort}`)
     // const urls = `http://${instances[0].ServiceAddress}:${instances[0].ServicePort}`
     // console.log('1111' + urls[0])
