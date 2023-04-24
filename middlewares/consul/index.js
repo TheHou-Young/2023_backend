@@ -1,6 +1,8 @@
 // 完成consul的相关配置
 const Consul = require('consul')
 
+var consulInstance = null
+
 class ConsulConfig {
   constructor() {
     const serviceName = 'user_manage'
@@ -46,5 +48,11 @@ class ConsulConfig {
   }
 }
 
+// 单例模式创建consul
+const getConsul = () => {
+  if (consulInstance !== null) return consulInstance
+  consulInstance = new ConsulConfig()
+  return consulInstance
+}
 
-module.exports = ConsulConfig
+module.exports = { getConsul }

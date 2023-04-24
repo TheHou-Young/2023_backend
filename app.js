@@ -17,8 +17,9 @@ const app = express()
 loadEnv() // 加载env环境
 connectDB() // 连接数据库
 // loadScript()
-const ConsulConfig = require('./middlewares/consul/index');
-const consul = new ConsulConfig();
+const { getConsul } = require('./middlewares/consul/index');
+getConsul();
+// const consul = new ConsulConfig();
 
 app.use(logger('dev'))
 app.use(express.json())
