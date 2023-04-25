@@ -1,19 +1,19 @@
 const express = require('express')
 const wrapper = require('../utils/wrapper')
-const roleController = require('../controller/role')
+const rewardController = require('../controller/reward')
 
 const router = express.Router()
 
 const API_ROUTE = {
-  list: '/role/list',
-  create: '/role/create',
-  update: '/role/update',
-  delete: '/role/delete',
+  checkIn: '/student/check-in',
+  refreshActiveTime: '/student/refresh-active-time',
+  getActiveTimeInTimePeriod: '/student/get-active-time',
+  addActiveVPrice: '/student/add-active-vprice',
 }
 
-router.get(API_ROUTE.list, wrapper(roleController.getRoleList))
-router.post(API_ROUTE.create, wrapper(roleController.createRole))
-router.patch(API_ROUTE.update, wrapper(roleController.updateRole))
-router.get(API_ROUTE.delete, wrapper(roleController.deleteRole))
+router.post(API_ROUTE.checkIn, wrapper(rewardController.checkIn))
+router.post(API_ROUTE.refreshActiveTime, wrapper(rewardController.refreshActiveTime))
+router.get(API_ROUTE.getActiveTimeInTimePeriod, wrapper(rewardController.getActiveTimeInTimePeriod))
+router.post(API_ROUTE.addActiveVPrice, wrapper(rewardController.addActiveVPrice))
 
 module.exports = router

@@ -16,7 +16,7 @@ class RecordService {
 
   getActiveTimeInTimePeriod = async ({ account, role_id, before_time, after_time }) => await rewardRecordModel.getActiveTimeInTimePeriod({ account, role_id, before_time, after_time })
 
-  getActiveVPrive = async ({ account, role_id, v_price }) => await userModel.addVPrice({ account, role_id, v_price })
+  addActiveVPrice = async ({ account, role_id, v_price }) => await userModel.addVPrice({ account, role_id, v_price })
 }
 
 const recordService = new RecordService()
