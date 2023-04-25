@@ -27,8 +27,8 @@ class UserDao {
 
   // 激活账户
   async updateActivationStatus(account, status, session) {
-    return await userModel.findOneAndUpdate(
-      { account },
+    const res = await userModel.findOneAndUpdate(
+      { account, delete_status: 0 },
       {
         activation_status: status,
       },
@@ -36,6 +36,7 @@ class UserDao {
         session,
       }
     )
+    return res
   }
 
   // 软删账户
