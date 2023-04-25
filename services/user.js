@@ -27,10 +27,7 @@ class UserService {
    * @returns
    */
   async setActivationStatus(account) {
-    const result = await userDao.findUserByAccount(account)
-    let status = result.activation_status === 1 ? 0 : 1
-    console.log(status, account)
-    return await userDao.updateActivationStatus(account, status)
+    return await userDao.updateActivationStatus(account)
   }
 
   /**

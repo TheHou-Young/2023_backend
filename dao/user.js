@@ -26,12 +26,10 @@ class UserDao {
   }
 
   // 激活账户
-  async updateActivationStatus(account, status, session) {
+  async updateActivationStatus(account, session) {
     const res = await userModel.findOneAndUpdate(
       { account, delete_status: 0 },
-      {
-        activation_status: status,
-      },
+      { $bit: { activation_status: { xor: 1 } } },
       {
         session,
       }
