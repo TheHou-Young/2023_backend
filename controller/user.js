@@ -34,12 +34,12 @@ class UserController {
   }
 
   getUserPermissionList = async (req) => {
-    const { my_account } = req.query
+    const { my_account } = req.headers
     return await userService.findUserPermissionList(my_account)
   }
 
   setActivationStatus = async (req) => {
-    const { my_account } = req.body
+    const { my_account } = req.headers
     return await userService.setActivationStatus(my_account)
   }
 }
