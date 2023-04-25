@@ -7,7 +7,7 @@ class RewardController {
     return res
   }
 
-  refreshActiveTime = async ({ my_account, my_role_id, active_time }) => {
+  refreshActiveTime = async (req) => {
     const { my_account, my_role_id, active_time } = req.body
     const res = await rewardService.refreshActiveTime({ account: my_account, role_id: my_role_id, active_time })
     return res

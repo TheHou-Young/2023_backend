@@ -1,15 +1,17 @@
 const userService = require('../services/user')
+const desensitize = require('../utils/desensitize')
 
 class UserController {
   getUserList = async (req) => {
     const { role_id = '', activation_status, account = '', size, page } = req.query
-    return await userService.getUserList({
+    const result = await userService.getUserList({
       role_id,
       activation_status,
       account,
       size,
       page,
     })
+    return desensitize(result)
   }
 
   createUser = async (req) => {
