@@ -26,16 +26,15 @@ class UserDao {
   }
 
   // 激活账户
-  async updateActivationStatus(account, status, session) {
-    return await userModel.findOneAndUpdate(
-      { account },
-      {
-        activation_status: status,
-      },
+  async updateActivationStatus(account, session) {
+    const res = await userModel.findOneAndUpdate(
+      { account, delete_status: 0 },
+      { $bit: { activation_status: { xor: 1 } } },
       {
         session,
       }
     )
+    return res
   }
 
   // 软删账户
@@ -140,6 +139,18 @@ class UserDao {
     ]
     const [result] = await userModel.aggregate(aggregateQuery)
     return result.permissions
+  }
+
+  // 添加虚拟奖励
+  addVPrice = async ({ account, role_id, v_price }, session) => {
+    const result = await userModel.findOneAndUpdate(
+      { account, role_id },
+      {
+        v_price: { $inc: { v_price } },
+      },
+      { session }
+    )
+    return result
   }
 }
 
