@@ -1,5 +1,7 @@
 const roleDao = require('../dao/role')
 const _ = require('lodash')
+const { setPermissionCache } = require('../redis/permission')
+const { toObjectId } = require('../utils/map')
 
 class RoleService {
   /**
@@ -12,7 +14,11 @@ class RoleService {
     if (!_.isEmpty(is_exit)) {
       throw new Error('已有该名称的角色，请更换名称')
     } else {
-      return await roleDao.createRole({ role_name, permission_ids })
+      const _id = toObjectId()
+      const res = await roleDao.createRole({ role_name, permission_ids, _id: toObjectId(_id) })
+      const permissions = await getPermissions(role_id)
+      setPermissionCache(permissions, _id.toString())
+      return res
     }
   }
 
@@ -39,7 +45,10 @@ class RoleService {
    * @returns
    */
   async updateRole({ role_id, role_name, permission_ids }) {
-    return await roleDao.updateRole({ role_id, role_name, permission_ids })
+    const res = await roleDao.updateRole({ role_id, role_name, permission_ids })
+    const permissions = await getPermissions(role_id)
+    setPermissionCache(permissions, role_id)
+    return res
   }
 
   /**

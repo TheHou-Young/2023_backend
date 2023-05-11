@@ -39,7 +39,6 @@ class RoleDao {
   //查询角色所有权限信息
   //TODO——连接后并没查询到permission表的内容
   async findRolePermissionInfo(role_id) {
-    const permissionDao = require('../models/permission')
     const data = await roleModel.findById(role_id).populate('permission_ids').exec()
     //console.log(data.permission_ids)
     return data
@@ -67,6 +66,23 @@ class RoleDao {
       options: { size, page },
     })
     return await findRolesWithPermission
+  }
+
+  async getPermissions(role_id) {
+    const [res] = await roleModel.aggregate([
+      {
+        match: { _id: role_id },
+      },
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'permission_ids',
+          foreignField: '_id',
+          as: 'permissions',
+        },
+      },
+    ])
+    return res?.permissions ?? []
   }
 
   async getDefaultRole() {

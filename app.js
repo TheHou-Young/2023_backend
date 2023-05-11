@@ -10,6 +10,7 @@ const httpHeader = require('./middlewares/httpHeader')
 const loggerMiddleware = require('./middlewares/logger')
 const translateNumber = require('./middlewares/translateNumber')
 const checkToken = require('./middlewares/checkToken')
+const sensitiveFilter = require('./middlewares/sensitiveFilter')
 const { loadScript } = require('./script')
 
 const app = express()
@@ -28,6 +29,7 @@ app.use('*', httpHeader)
 app.options('*', (_, res) => res.sendStatus(200))
 
 app.use(checkToken)
+app.use(sensitiveFilter)
 app.use(translateNumber) // get请求参数预处理(string转化number)
 app.use(loggerMiddleware) // 日志打印
 loadRouter(app) // 路由加载
