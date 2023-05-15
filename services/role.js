@@ -16,7 +16,7 @@ class RoleService {
     } else {
       const _id = toObjectId()
       const res = await roleDao.createRole({ role_name, permission_ids, _id: toObjectId(_id) })
-      const permissions = await getPermissions(role_id)
+      const permissions = await roleDao.getPermissions(_id)
       setPermissionCache(permissions, _id.toString())
       return res
     }
@@ -46,7 +46,7 @@ class RoleService {
    */
   async updateRole({ role_id, role_name, permission_ids }) {
     const res = await roleDao.updateRole({ role_id, role_name, permission_ids })
-    const permissions = await getPermissions(role_id)
+    const permissions = await roleDao.getPermissions(role_id)
     setPermissionCache(permissions, role_id)
     return res
   }

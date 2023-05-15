@@ -71,7 +71,7 @@ class RoleDao {
   async getPermissions(role_id) {
     const [res] = await roleModel.aggregate([
       {
-        match: { _id: role_id },
+        $match: { _id: toObjectId(role_id) },
       },
       {
         $lookup: {

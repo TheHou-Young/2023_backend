@@ -16,7 +16,7 @@ const finishInWhichDB = async (dbIndex, fn) => {
 
 const setPermissionCache = async (permissions, role_id) => {
   return await finishInWhichDB(REDIS_DB.permission, async () => {
-    return await redisClient.set(role_id, permissions)
+    return await redisClient.set(role_id, JSON.stringify(permissions))
   })
 }
 
@@ -24,11 +24,7 @@ const setPermissionCache = async (permissions, role_id) => {
 const isExistPermission = async (role_id, api_route_name) => {
   return await finishInWhichDB(REDIS_DB.permission, async () => {
     const allPermissions = await redisClient.get(role_id)
-    return !_.isEmpty(
-      allPermissions.filter(
-        (permission) => permission.api_route_name === api_route_name
-      )
-    )
+    return !_.isEmpty(allPermissions.filter((permission) => permission.api_route_name === api_route_name))
   })
 }
 
