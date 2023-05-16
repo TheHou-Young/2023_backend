@@ -1,4 +1,5 @@
 const { OK, Fail } = require('../result')
+const cryptoInstance = require('../crypto')
 
 const wrapper = (handler) => async (req, res, next) => {
   try {
@@ -7,7 +8,8 @@ const wrapper = (handler) => async (req, res, next) => {
       data: response,
       msg: '操作成功',
     })
-    res.send(result)
+    const encryptData = cryptoInstance.encryptByAES(JSON.stringify(result), res.AESKey)
+    res.send(encryptData)
   } catch (error) {
     const errorResult = new Fail({
       msg: error.message,

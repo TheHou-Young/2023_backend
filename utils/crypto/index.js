@@ -1,13 +1,12 @@
 const CryptoJS = require('crypto-js')
-const JSEncrypt = require('jsencrypt')
-
-const JSEncryptInstance = new JSEncrypt()
+const NodeRSA = require('node-rsa')
 
 // RSA解密
-const decryptLongByRSA = (cipherContent) => {
+const decryptByRSA = (cipherContent) => {
   const newValue = typeof cipherContent === 'string' ? cipherContent : cipherContent.toString()
-  JSEncryptInstance.setPrivateKey(process.env.RSA_PRIVATE_KEY)
-  return JSEncryptInstance.decryptLong(newValue) // 注意：加密类型为string
+  const privateKey = new NodeRSA(process.env.RSA_PRIVATE_KEY)
+  privateKey.setOptions({ encryptionScheme: 'pkcs1' })
+  return privateKey.decrypt(newValue, 'utf8')
 }
 
 // AES加密
@@ -27,7 +26,7 @@ const decryptByAES = (plainContent, key) => {
 }
 
 module.exports = {
-  decryptLongByRSA,
+  decryptByRSA,
   encryptByAES,
   decryptByAES,
 }

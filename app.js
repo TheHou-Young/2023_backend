@@ -12,6 +12,7 @@ const translateNumber = require('./middlewares/translateNumber')
 const checkToken = require('./middlewares/checkToken')
 const sensitiveFilter = require('./middlewares/sensitiveFilter')
 const xssFliter = require('./middlewares/xssFilter')
+const { decryptRequest } = require('./middlewares/cryptoData')
 const { loadScript } = require('./script')
 
 const app = express()
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, './public')))
 app.use('*', httpHeader)
 app.options('*', (_, res) => res.sendStatus(200))
 
+app.use(decryptRequest) // 解密请求数据
 app.use(checkToken)
 app.use(sensitiveFilter)
 app.use(xssFliter)
