@@ -3,8 +3,7 @@ const Consul = require('consul')
 const { CONSUL } = require('../../public/constants/index')
 const { getIPAddress } = require('../../utils/ip/index')
 
-var consulInstance = null
-
+// 单例模式创建consul
 class ConsulConfig {
   constructor() {
     const SERVICE_NAME = CONSUL.SERVICE_NAME
@@ -51,12 +50,11 @@ class ConsulConfig {
     return urls[0]
   }
 }
+// const getConsul = () => {
+//   if (consulInstance !== null) return consulInstance
+//   consulInstance = new ConsulConfig()
+//   return consulInstance
+// }
+const consulInstance = new ConsulConfig()
 
-// 单例模式创建consul
-const getConsul = () => {
-  if (consulInstance !== null) return consulInstance
-  consulInstance = new ConsulConfig()
-  return consulInstance
-}
-
-module.exports = { getConsul }
+module.exports = consulInstance

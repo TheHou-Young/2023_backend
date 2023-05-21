@@ -11,14 +11,14 @@ const loggerMiddleware = require('./middlewares/logger')
 const translateNumber = require('./middlewares/translateNumber')
 const checkToken = require('./middlewares/checkToken')
 const { loadScript } = require('./script')
-const { getConsul } = require('./middlewares/consul/index');
+const consulInstance = require('./middlewares/consul/index');
 
 const app = express()
 
 loadEnv() // 加载env环境
 connectDB() // 连接数据库
 // loadScript()
-getConsul();
+// getConsul();
 
 app.use(logger('dev'))
 app.use(express.json())
