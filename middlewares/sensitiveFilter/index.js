@@ -10,7 +10,7 @@ const sensitiveObjectFilter = (object, blackList = []) => {
   }
 }
 
-const blackList = ['password', 'account', 'role_id', '_id']
+const blackList = ['password', 'account', 'role_id', '_id', 'permission_pid']
 // 政治敏感词过滤器
 const sensitiveFilter = (req, _, next) => {
   // 一般在body里面才会做操作
