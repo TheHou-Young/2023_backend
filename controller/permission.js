@@ -11,7 +11,6 @@ class PermissionController {
   }
 
   getPermissionList = async (req) => {
-    //const { page = DEFAULT.page, size = DEFAULT.size } = req.query
     return await permissionService.findAllPermission()
   }
 }
