@@ -21,8 +21,34 @@ class RewardRecordDao {
   }
 
   getMyCurrentRecord = async ({ account, role_id, left, right }) => {
-    const result = await rewardRecordModel.findOne({ account, role_id, check_in_time: { $gt: left, $lt: right } })
-    return result
+    const [result] = await rewardRecordModel.aggregate([
+      {
+        $match: {
+          account,
+          role_id,
+          check_in_time: { $gt: left, $lt: right },
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'account',
+          foreignField: 'account',
+          as: 'temp',
+        },
+      },
+      {
+        $unwind: '$temp',
+      },
+      {
+        $project: {
+          v_price: '$temp.v_price',
+          check_in_time: 1,
+          active_time: 1,
+        },
+      },
+    ]) // rewardRecordModel.findOne({ account, role_id, check_in_time: { $gt: left, $lt: right } })
+    return result ?? {}
   }
 }
 
