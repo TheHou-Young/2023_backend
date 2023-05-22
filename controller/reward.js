@@ -24,6 +24,12 @@ class RewardController {
     const res = await rewardService.addActiveVPrice({ account: my_account, role_id: my_role_id, v_price })
     return res
   }
+
+  getMyCurrentRecord = async (req) => {
+    const { my_account, my_role_id } = req.body
+    const res = await rewardService.getMyCurrentRecord({ account: my_account, role_id: my_role_id })
+    return res
+  }
 }
 
 const rewardController = new RewardController()
