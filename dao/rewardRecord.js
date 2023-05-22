@@ -1,5 +1,6 @@
 const rewardRecordModel = require('../models/rewardRecord')
-const period = require('../utils/period')
+const userModel = require('../models/user')
+const { toObjectId } = require('../utils/map')
 
 class RewardRecordDao {
   // 用户签到记录
@@ -21,34 +22,54 @@ class RewardRecordDao {
   }
 
   getMyCurrentRecord = async ({ account, role_id, left, right }) => {
-    const [result] = await rewardRecordModel.aggregate([
+    const [result] = await userModel.aggregate([
       {
         $match: {
           account,
-          role_id,
-          check_in_time: { $gt: left, $lt: right },
+          role_id: toObjectId(role_id),
         },
       },
       {
-        $lookup: {
-          from: 'users',
-          localField: 'account',
-          foreignField: 'account',
-          as: 'temp',
+        $facet: {
+          user: [
+            {
+              $lookup: {
+                from: 'rewardrecords',
+                localField: 'account',
+                foreignField: 'account',
+                as: 'temp',
+              },
+            },
+          ],
+          record: [
+            {
+              $lookup: {
+                from: 'rewardrecords',
+                localField: 'account',
+                foreignField: 'account',
+                as: 'temp',
+              },
+            },
+            {
+              $unwind: '$temp',
+            },
+            {
+              $match: {
+                check_in_time: { $gt: left, $lt: right },
+              },
+            },
+          ],
         },
       },
-      {
-        $unwind: '$temp',
-      },
-      {
-        $project: {
-          v_price: '$temp.v_price',
-          check_in_time: 1,
-          active_time: 1,
-        },
-      },
-    ]) // rewardRecordModel.findOne({ account, role_id, check_in_time: { $gt: left, $lt: right } })
-    return result ?? {}
+    ])
+    const {
+      user: [userResult],
+      record: [recordResult],
+    } = result
+    return {
+      ...(userResult ?? {}),
+      ...(recordResult ?? {}),
+    }
   }
 }
 
