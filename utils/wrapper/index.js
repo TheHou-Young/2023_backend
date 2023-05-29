@@ -9,7 +9,7 @@ const wrapper = (handler) => async (req, res, next) => {
       msg: '操作成功',
     })
     const encryptData = cryptoInstance.encryptByAES(JSON.stringify(result), res.AESKey)
-    res.send(encryptData)
+    res.send(result)
   } catch (error) {
     const errorResult = new Fail({
       msg: error.message,

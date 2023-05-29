@@ -27,13 +27,7 @@ class UserDao {
 
   // 激活账户
   async updateActivationStatus(account, session) {
-    const res = await userModel.findOneAndUpdate(
-      { account, delete_status: 0 },
-      { $bit: { activation_status: { xor: 1 } } },
-      {
-        session,
-      }
-    )
+    const res = await userModel.findOneAndUpdate({ account, delete_status: 0 }, { $bit: { activation_status: { xor: 1 } } }, { session, new: true })
     return res
   }
 
@@ -45,9 +39,7 @@ class UserDao {
       {
         delete_status: 1,
       },
-      {
-        session,
-      }
+      { session, new: true }
     )
   }
 
@@ -61,7 +53,7 @@ class UserDao {
         role_id,
         account: new_account,
       },
-      { session }
+      { session, new: true }
     )
   }
 
@@ -144,9 +136,11 @@ class UserDao {
   // 添加虚拟奖励
   addVPrice = async ({ account, role_id, v_price }, session) => {
     const result = await userModel.findOneAndUpdate(
-      { account, role_id },
+      { account, role_id: toObjectId(role_id) },
       {
-        v_price: { $inc: { v_price } },
+        $inc: {
+          v_price,
+        },
       },
       { session }
     )

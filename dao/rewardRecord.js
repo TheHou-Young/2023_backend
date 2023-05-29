@@ -4,8 +4,8 @@ const { toObjectId } = require('../utils/map')
 
 class RewardRecordDao {
   // 用户签到记录
-  checkIn = async ({ account, role_id }, session) => {
-    const result = await rewardRecordModel.create({ account, role_id }, { session })
+  checkIn = async ({ account, role_id }) => {
+    const result = await rewardRecordModel.create({ account, role_id: toObjectId(role_id) })
     return result
   }
 

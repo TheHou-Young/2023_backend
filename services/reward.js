@@ -5,12 +5,9 @@ const period = require('../utils/period')
 
 class RecordService {
   checkIn = async ({ account, role_id, v_price }) => {
-    const res = await withTransaction(async (session) => {
-      const result = await userDao.addVPrice({ account, role_id, v_price }, session)
-      await rewardRecordDao.checkIn({ account, role_id }, session)
-      return result
-    })
-    return res
+    await userDao.addVPrice({ account, role_id, v_price })
+    const result = await rewardRecordDao.checkIn({ account, role_id })
+    return result
   }
 
   refreshActiveTime = async ({ account, role_id, active_time }) => {
